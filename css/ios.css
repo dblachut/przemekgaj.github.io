@@ -1542,6 +1542,7 @@ div.ui-mobile-viewport {
 .ui-header .ui-btn-left,
 .ui-header .ui-btn-right {
 	font-size: 12.5px;
+	border: none;
 }
 .ui-mini.ui-btn-icon-notext,
 .ui-mini .ui-btn-icon-notext,

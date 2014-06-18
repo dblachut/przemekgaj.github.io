@@ -8,46 +8,20 @@
 	<link href="css/ios.css" rel="stylesheet" />
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="js/jquery.mobile-1.4.2.js"></script>
-	<script>
-	(function( win ){
-		var doc = win.document;
-	   	
-		// If there's a hash, or addEventListener is undefined, stop here
-		if( !location.hash && win.addEventListener ){
-			//scroll to 1
-			window.scrollTo( 0, 1 );
-			var scrollTop = 1,
-				getScrollTop = function(){
-					return win.pageYOffset || doc.compatMode === "CSS1Compat" && doc.documentElement.scrollTop || doc.body.scrollTop || 0;
-				},
-				//reset to 0 on bodyready, if needed
-				bodycheck = setInterval(function(){
-					if( doc.body ){
-						clearInterval( bodycheck );
-						scrollTop = getScrollTop();
-						win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
-					}	
-				}, 15 );
-			win.addEventListener( "load", function(){
-				setTimeout(function(){
-						//reset to hide addr bar at onload
-						win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
-				}, 0);
-			} );
-		}
-	})( this );
-	</script>
+	<script src="js/script.js"></script>
 </head>
 <body>
 
 <div data-role="page"> 
  
 	<div data-role="header" data-position="fixed"> 
+		<a href="#" data-rel="back" data-theme="a">Zamknij</a>
 		<h1>Kalkulator funkcyjny</h1>
+		<a href="#" data-rel="back" data-theme="a" class="edit-functions">Edytuj</a>
 	</div><!-- /header --> 
  
-	<div data-role="content"> 
-		<ul data-role="listview" data-inset="true" class="ui-alt-icon"> 
+	<div data-role="content" class="ui-nosvg"> 
+		<ul data-role="listview" data-inset="true" class="ui-alt-icon functions-listview"> 
 			<li><a href="#f1" data-transition="slide">Funkcja 1</a></li> 
 			<li><a href="#f2" data-transition="slide">Funkcja 2</a></li> 
 			<li><a href="#f3" data-transition="slide">Funkcja 3</a></li> 
@@ -63,7 +37,7 @@
 	<div data-role="page" id="f1">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 1</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse">Wróć</a>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
 		<div data-role="content"> 
@@ -73,7 +47,7 @@
 	<div data-role="page" id="f2">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 2</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse">Wróć</a>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
 		<div data-role="content"> 
@@ -83,7 +57,7 @@
 	<div data-role="page" id="f3">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 3</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse">Wróć</a>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
 		<div data-role="content">  
@@ -93,7 +67,7 @@
 	<div data-role="page" id="f4">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 4</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse">Wróć</a>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
 		<div data-role="content">  
@@ -103,7 +77,7 @@
 	<div data-role="page" id="f5">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 5</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse">Wróć</a>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
 		<div data-role="content">  
@@ -113,7 +87,7 @@
 	<div data-role="page" id="f6">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 6</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse">Wróć</a>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
 		<div data-role="content">  
@@ -123,7 +97,7 @@
 	<div data-role="page" id="f7">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 7</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse">Wróć</a>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
 		<div data-role="content">  

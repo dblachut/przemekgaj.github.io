@@ -813,7 +813,7 @@ label.ui-btn {
 	position: relative !important;
 }
 .ui-popup-button-left {
-	width: 49.7%;
+	width: 46%;
 	margin: 0 !important;
 	padding: .7em 0 !important;
 	border-bottom: none;
@@ -822,7 +822,7 @@ label.ui-btn {
 }
 
 .ui-popup-button-right {
-	width: 49.7%;
+	width: 46%;
 	margin: 0 !important;
 	padding: .7em 0 !important;
 	border: none;

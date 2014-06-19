@@ -3614,6 +3614,32 @@ fieldset.ui-controlgroup {
 .ui-selectmenu .ui-selectmenu-placeholder {
 	display: none;
 }
+
+.ui-input-listview {
+	/*width: 30% !important;*/
+}
+
+.ui-listview-label {
+	float: left;
+	padding: 0em 0;
+	margin: 0 1em 0 0;
+}
+
+.ui-listview .ui-input-text {
+	width: 30% !important;
+	float: left !important;
+	margin: 0 0 0 2em !important;
+	border: none !important;
+}
+
+.ui-listview .ui-input-text input {
+	color: #ddd;
+	/*height: 1em !important;*/
+	min-height: 1em !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
 .ui-listview,
 .ui-listview > li {
 	margin: 0;

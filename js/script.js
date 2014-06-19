@@ -133,14 +133,17 @@ $(document).ready(function(){
 		//console.log($('input[name="formula"]').text());
 		insertFunctionToDb($('input[name="formula-name"]').val(), $('textarea[name="formula"]').val());
 		selectFromDb();
+		$('.done-functions').addClass('edit-functions').removeClass('done-functions');
+		$('.edit-functions').html('Edytuj');
 		$('#add-function').removeClass('ui-page-active');
 		$.mobile.changePage('#main', {transition: "slide"});
+		
 	});
 	
 	$(document).on('tap', '.resolv-function', function(){
 		
 		
-		//dropDb();
+		dropDb();
 		//createDb();
 		//return false;
 		

@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<div data-role="page"> 
+<div data-role="page" id="main"> 
  
 	<div data-role="header" data-position="fixed"> 
 		<a href="#" data-rel="back" data-theme="a">Zamknij</a>
@@ -22,25 +22,25 @@
  
 	<div data-role="content" class="ui-nosvg"> 
 		<ul data-role="listview" data-inset="true" class="ui-alt-icon functions-listview"> 
-			<li><a href="#f1" data-transition="slide">Funkcja 1</a></li> 
+			<!--<li><a href="#f1" data-transition="slide">Funkcja 1</a></li> 
 			<li><a href="#f2" data-transition="slide">Funkcja 2</a></li> 
 			<li><a href="#f3" data-transition="slide">Funkcja 3</a></li> 
 			<li><a href="#f4" data-transition="slide">Funkcja 4</a></li> 
 			<li><a href="#f5" data-transition="slide">Funkcja 5</a></li> 
 			<li><a href="#f6" data-transition="slide">Funkcja 6</a></li> 
-			<li><a href="#f7" data-transition="slide">Funkcja 7</a></li> 
+			<li><a href="#f7" data-transition="slide">Funkcja 7</a></li> -->
 		</ul>
  
-		</div><!-- /ui-body wrapper -->	
-	</div><!-- /page --> 
+	</div><!-- /ui-body wrapper -->	
+</div><!-- /page --> 
 	
-	<div data-role="page" id="f1">
+	<!--<div data-role="page" id="f1">
 		<div data-role="header" data-position="fixed">
 			<h1>Funkcja 1</h1>
 			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
 		</div><!-- /header --> 
 	 
-		<div data-role="content"> 
+		<!--<div data-role="content"> 
 			<div data-role="tabs" class="ui-ios-tabs">
 		      <div data-role="navbar">
 		        <ul>
@@ -59,7 +59,7 @@
 					<li><div class="ui-listview-label">Liczba 6:</div><input type="text" class="ui-input-listview" value="Liczba 6..."/></li>   
 					<li><div class="ui-listview-label">Liczba 7:</div><input type="text" class="ui-input-listview" value="Liczba 7..."/></li>   
 				</ul>
-				<a href="#popupDialog" data-role="button" data-rel="popup" class="ui-btn-plain check-formula">Oblicz</a>
+				<a href="" data-role="button" class="ui-btn-plain resolv-function">Oblicz</a>
 		      </div>
 		      <div id="fragment-2">
 		        <p>Wyniki</p>
@@ -71,66 +71,7 @@
 		</div>
 	</div>
 	
-	<div data-role="page" id="f2">
-		<div data-role="header" data-position="fixed">
-			<h1>Funkcja 2</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
-		</div><!-- /header --> 
-	 
-		<div data-role="content"> 
-		</div> 
-	</div>
-	
-	<div data-role="page" id="f3">
-		<div data-role="header" data-position="fixed">
-			<h1>Funkcja 3</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
-		</div><!-- /header --> 
-	 
-		<div data-role="content">  
-		</div>
-	</div>
-	
-	<div data-role="page" id="f4">
-		<div data-role="header" data-position="fixed">
-			<h1>Funkcja 4</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
-		</div><!-- /header --> 
-	 
-		<div data-role="content">  
-		</div>
-	</div>
-	
-	<div data-role="page" id="f5">
-		<div data-role="header" data-position="fixed">
-			<h1>Funkcja 5</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
-		</div><!-- /header --> 
-	 
-		<div data-role="content">  
-		</div>
-	</div>
-	
-	<div data-role="page" id="f6">
-		<div data-role="header" data-position="fixed">
-			<h1>Funkcja 6</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
-		</div><!-- /header --> 
-	 
-		<div data-role="content">  
-		</div>
-	</div>
-	
-	<div data-role="page" id="f7">
-		<div data-role="header" data-position="fixed">
-			<h1>Funkcja 7</h1>
-			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
-		</div><!-- /header --> 
-	 
-		<div data-role="content">  
-		</div>
-	</div>
-	
+	-->	
 	<div data-role="page" id="add-function">
 		<div data-role="header" data-position="fixed">
 			<h1>Dodaj funkcję</h1>
@@ -139,6 +80,7 @@
 	 
 		<div data-role="content">  
 			<div data-role="fieldcontain">
+				<input type="text" name="formula-name"/>
 				<textarea name="formula"></textarea>
 			</div>
 			<a href="#popupDialog" data-role="button" data-rel="popup" class="ui-btn-plain check-formula">Sprawdź poprawność</a>
@@ -148,11 +90,48 @@
 						<h3 class="ui-title">Sprawdzenie poprawności</h3>
 						<p>Formuła jest poprawna</p>
 						<div class="ui-popup-buttons">
-							<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="a" class="ui-popup-button-left">Zapisz</a>    
+							<a href="#" data-role="button" data-inline="true" data-theme="a" class="ui-popup-button-left save-formula">Zapisz</a>    
 							<a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="a" class="ui-popup-button-right">Kontynuuj edycję</a> 
 						</div> 
 					</div>
 				</div>
+		</div>
+	</div>
+	
+	<div data-role="page" id="function-sketch">
+		<div data-role="header" data-position="fixed">
+			<h1></h1>
+			<a href="#" data-rel="back" data-theme="a" data-direction="reverse" class="ui-btn ui-alt-icon ui-icon-carat-l ui-btn-icon-left">Wróć</a>
+		</div><!-- /header --> 
+	 
+		<div data-role="content"> 
+			<div data-role="tabs" class="ui-ios-tabs">
+		      <div data-role="navbar">
+		        <ul>
+		          <li><a href="#fragment-1" class="ui-ios-tab ui-ios-tab-first">Dane</a></li>
+		          <li class="ui-ios-tab-li"><a href="#fragment-2" class="ui-ios-tab ui-ios-tab-middle">Wyniki</a></li>
+		          <li><a href="#fragment-3" class="ui-ios-tab ui-ios-tab-last">Wykres</a></li>
+		        </ul>
+		      </div>
+		      <div id="fragment-1">
+		        <ul data-role="listview" data-inset="true" class=""> 
+					<!--<li><div class="ui-listview-label">Liczba 1:</div><input type="text" class="ui-input-listview" value="Liczba 1..."/></li> 
+					<li><div class="ui-listview-label">Liczba 2:</div><input type="text" class="ui-input-listview" value="Liczba 2..."/></li>  
+					<li><div class="ui-listview-label">Liczba 3:</div><input type="text" class="ui-input-listview" value="Liczba 3..."/></li>  
+					<li><div class="ui-listview-label">Liczba 4:</div><input type="text" class="ui-input-listview" value="Liczba 4..."/></li>  
+					<li><div class="ui-listview-label">Liczba 5:</div><input type="text" class="ui-input-listview" value="Liczba 5..."/></li>   
+					<li><div class="ui-listview-label">Liczba 6:</div><input type="text" class="ui-input-listview" value="Liczba 6..."/></li>   
+					<li><div class="ui-listview-label">Liczba 7:</div><input type="text" class="ui-input-listview" value="Liczba 7..."/></li>   -->
+				</ul>
+				<a href="" data-role="button" class="ui-btn-plain resolv-function">Oblicz</a>
+		      </div>
+		      <div id="fragment-2">
+		        <p>Wyniki</p>
+		      </div>
+		      <div id="fragment-3">
+		        <p>Wykres</p>
+		      </div>
+		    </div>
 		</div>
 	</div>
 

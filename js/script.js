@@ -56,14 +56,14 @@ function insertFunctionToDb(name, func){
 
 function selectFromDb(){
 	db = openDatabase ("Test", "1.0", "Test", 65535);
-	$('.functions-listview li').remove();
-	$('.appended-functions').remove();
 	
 	db.transaction (function (transaction) {
 	    var sql = "SELECT * FROM functions";
 	    transaction.executeSql (sql, undefined, 
 	    function (transaction, result){
 	      if (result.rows.length){
+	      	$('.functions-listview li').remove();
+	      	$('.appended-functions').remove();
 	        for (var i = 0; i < result.rows.length; i++){
 	          var row = result.rows.item (i);
 	          var id = row.id;

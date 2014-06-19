@@ -1,3 +1,13 @@
+function checkFormula(formula){
+	//TODO: check formula is ok
+	
+	if(formula.length > 0)
+		return true;
+	else
+		return false;
+	
+}
+
 $(document).ready(function(){
 	
 	$(document).on('tap','.edit-functions',  function(){
@@ -29,6 +39,15 @@ $(document).ready(function(){
 		
 	});
 	
-	
+	/*$(document).on('tap', '.check-formula', function(){
+		
+		if(checkFormula($('input[name="formula"]').text())){
+			$('#overlay').show();
+		}
+		else {
+			$('#overlay').show();
+		}
+		
+	});*/
 	
 });

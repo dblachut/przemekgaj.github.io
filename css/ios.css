@@ -800,12 +800,40 @@ label.ui-btn {
 -----------------------------------------------------------------------------------------------------------*/
 /* Class ui-btn-corner-all deprecated in 1.4 */
 .ui-corner-all {
+	/*-webkit-border-radius: 				.3125em /*{global-radii-blocks}*/;
+	/*border-radius: 						.3125em /*{global-radii-blocks}*/;
+}
+.ui-popup {
 	-webkit-border-radius: 				.3125em /*{global-radii-blocks}*/;
 	border-radius: 						.3125em /*{global-radii-blocks}*/;
+	text-align: center;
+	width: 100% !important;
+	left: 0% !important;
+	right: 0% !important;
+	position: relative !important;
+}
+.ui-popup-button-left {
+	width: 49.7%;
+	margin: 0 !important;
+	padding: .7em 0 !important;
+	border-bottom: none;
+	border-left: none;
+	border-top: none;
+}
+
+.ui-popup-button-right {
+	width: 49.7%;
+	margin: 0 !important;
+	padding: .7em 0 !important;
+	border: none;
+}
+.ui-popup-buttons {
+	width: inherit;
+	border-top: 1px #ddd solid
 }
 /* Buttons */
 .ui-btn-corner-all,
-.ui-btn.ui-corner-all,
+/*.ui-btn.ui-corner-all,
 /* Slider track */
 .ui-slider-track.ui-corner-all,
 /* Flipswitch */
@@ -840,9 +868,9 @@ label.ui-btn {
 
 }
 .ui-shadow-inset {
-	-webkit-box-shadow: inset 0 1px 3px /*{global-box-shadow-size}*/ 	rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
-	-moz-box-shadow: inset 0 1px 3px /*{global-box-shadow-size}*/ 		rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
-	box-shadow: inset 0 1px 3px /*{global-box-shadow-size}*/ 	rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
+	/*-webkit-box-shadow: inset 0 1px 3px /*{global-box-shadow-size}*/ 	rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
+	/*-moz-box-shadow: inset 0 1px 3px /*{global-box-shadow-size}*/ 		rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
+	/*box-shadow: inset 0 1px 3px /*{global-box-shadow-size}*/ 	rgba(0,0,0,.2) /*{global-box-shadow-color}*/;
 }
 .ui-overlay-shadow {
 	-webkit-box-shadow: 0 0 12px 		rgba(0,0,0,.6);
@@ -947,6 +975,13 @@ html body .ui-group-theme-a .ui-bar-inherit {
 .ui-page-theme-a .ui-panel-wrapper {
 	background-color: 			#ffffff /*{a-page-background-color}*/;
 	border-color:	 		#bbb /*{a-page-border}*/;
+	color: 					#333 /*{a-page-color}*/;
+	text-shadow: 0 /*{a-page-shadow-x}*/ 1px /*{a-page-shadow-y}*/ 0 /*{a-page-shadow-radius}*/ 	#f3f3f3 /*{a-page-shadow-color}*/;
+}
+/*Plain button*/
+.ui-btn-plain {
+	background-color: 		#f4f4f4 /*{a-page-background-color}*/;
+	border-color:	 		#fff !important /*{a-page-border}*/;
 	color: 					#333 /*{a-page-color}*/;
 	text-shadow: 0 /*{a-page-shadow-x}*/ 1px /*{a-page-shadow-y}*/ 0 /*{a-page-shadow-radius}*/ 	#f3f3f3 /*{a-page-shadow-color}*/;
 }
@@ -2457,6 +2492,7 @@ button.ui-btn-icon-notext,
 	overflow: visible;
 	clear: both;
 	padding: .8em 0;
+	background: #e5e5e5;
 }
 .ui-field-contain > label ~ [class*="ui-"],
 .ui-field-contain .ui-controlgroup-controls {
@@ -2468,8 +2504,8 @@ button.ui-btn-icon-notext,
 @media (min-width: 28em) {
 	.ui-field-contain,
 	.ui-mobile fieldset.ui-field-contain {
-		padding: 0;
-		margin: 1em 0;
+		padding: 1em;
+		margin: 0em -1em 0em -1em;
 		border-bottom-width: 0;
 	}
 	.ui-field-contain:before,
@@ -3088,6 +3124,7 @@ fieldset.ui-controlgroup {
 	position: absolute;
 	padding: 0;
 	outline: 0;
+	width: 100%;
 }
 .ui-popup {
 	position: relative;

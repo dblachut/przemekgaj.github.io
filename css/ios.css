@@ -1346,6 +1346,10 @@ button[disabled],
 	cursor: default !important;
 	pointer-events: none;
 }
+
+.ui-invisible {
+	display: none;
+}
 /* Focus state outline
 -----------------------------------------------------------------------------------------------------------*/
 .ui-btn:focus,

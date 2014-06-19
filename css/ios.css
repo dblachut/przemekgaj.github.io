@@ -830,12 +830,17 @@ label.ui-btn {
 	border-left: none;
 	border-top: none;
 }
-
+.ui-popup-button-left:hover {
+	background: none !important;
+}
 .ui-popup-button-right {
 	width: 46%;
 	margin: 0 !important;
 	padding: .7em 0 !important;
 	border: none;
+}
+.ui-popup-button-right:hover {
+	background: none !important;
 }
 .ui-popup-buttons {
 	width: inherit;
@@ -1036,6 +1041,42 @@ html .ui-bar-a a:active,
 html .ui-body-a a:active,
 html body .ui-group-theme-a a:active {
 	color: #005599 /*{a-link-active}*/;
+}
+/*iOs tab button*/
+.ui-ios-tab {
+	border-color: #0568ff !important;
+	border-width: 2px !important;
+	color: #0568ff !important;
+	text-shadow: none !important;
+}
+
+.ui-ios-tab-first {
+	border-right-width: 0 !important;
+	-webkit-border-radius: .75em 0 0 .75em;
+	border-radius: .75em 0 0 .75em;
+}
+.ui-ios-tab-middle {
+	color: #fff !important;
+	background-color: #0568ff !important;
+}
+.ui-ios-tab-last {
+	border-left-width: 0 !important;
+	-webkit-border-radius: 0 .75em .75em 0;
+	border-radius: 0 .75em .75em 0;
+}
+.ui-ios-tabs .ui-btn-active {
+	background: none !important;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
+}
+.ui-ios-tab-li .ui-btn-active {
+	background-color: #0568ff !important;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	text-shadow: none !important;
 }
 /* Button up */
 .ui-page-theme-a .ui-btn,

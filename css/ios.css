@@ -1348,7 +1348,7 @@ button[disabled],
 }
 
 .ui-invisible {
-	display: none;
+	display: none !important;
 }
 /* Focus state outline
 -----------------------------------------------------------------------------------------------------------*/

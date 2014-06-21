@@ -67,7 +67,12 @@ function selectFromDb(){
 	          page.addClass('appended-functions');
 	          page.find('h1').html(name);
 	          //console.log(page.find('ul'));
-	          page.find('.input-list').append('<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + func + '</a></li>');
+	          
+	          isFormulaCorrect(func);
+	          for(var i = 0; i<variables.length; i++){
+		          //page.find('.input-list').append('<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + variables[i] + '</a></li>');
+		          page.find('.input-list').append('<li><div class="ui-listview-label">'+ variables[i] +':</div><input type="text" name="'+ variables[i] +'" class="ui-input-listview" value=""/></li> ');
+	          }
 	          
 	          //$('div[data-role="page"]').append(page);
 	          page.appendTo('body');
@@ -136,8 +141,6 @@ $(document).ready(function(){
 		}
 		else {
 			$('#popupDialog').html(one_button.html());
-			//$('#popupDialog2').popup();
-			//$.mobile.changePage('#popupDialog2', 'pop', true, true);
 			return false;
 		}
 
@@ -192,11 +195,16 @@ function isLetter(c)
 	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 }
 
+var variables;
+
 function isFormulaCorrect(formula)
 {
 	var openingBrackets = 0;
 	var closingBrackets = 0;
 	var i;
+	var variable = false;
+	var variable_name = '';
+	variables = Array();
 
 	for(i=0; i<formula.length; ++i)
 	{
@@ -231,9 +239,21 @@ function isFormulaCorrect(formula)
 				console.log("Error brak znaku $ w argumencie!");
 				return false;
 			}
+			variable = true;
 		}
 		else if(formula[i] == '}')
+		{
 			closingBrackets++;
+			variable = false;
+			variables.push(variable_name);
+			variable_name = '';
+		}
+		
+		if(variable && formula[i] != '{')
+		{
+			variable_name += formula[i];
+		}
+		
 	}
 
 	if(openingBrackets != closingBrackets)

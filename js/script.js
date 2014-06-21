@@ -1,13 +1,3 @@
-function checkFormula(formula){
-	//TODO: check formula is ok
-	
-	if(formula.length > 0)
-		return true;
-	else
-		return false;
-	
-}
-
 var db;
 
 function createDb(){
@@ -96,11 +86,11 @@ function selectFromDb(){
 }
 
 $(document).ready(function(){
+
 	createDb();
 	selectFromDb();
 	
 	$(document).on('tap','.edit-functions',  function(){
-		
 		var addFunction = $('.functions-listview').find('li:last').clone();
 		addFunction.addClass('ui-first-child').removeClass('ui-invisible');
 		addFunction.find('a').removeClass('ui-icon-carat-r').addClass('ui-icon-plus').addClass('add-function').html('Dodaj funkcję').attr('href', '#add-function');
@@ -128,25 +118,158 @@ $(document).ready(function(){
 		
 	});
 	
+	var one_button;
+	var two_buttons;
+	
+	
 	$(document).on('tap', '.save-formula', function(){
-		//console.log($('input[name="formula-name"]').val());
-		//console.log($('input[name="formula"]').text());
-		insertFunctionToDb($('input[name="formula-name"]').val(), $('textarea[name="formula"]').val());
-		selectFromDb();
-		$('.done-functions').addClass('edit-functions').removeClass('done-functions');
-		$('.edit-functions').html('Edytuj');
-		$('#add-function').removeClass('ui-page-active');
-		$.mobile.changePage('#main', {transition: "slide"});
+		
+		if( $('input[name="formula-name"]').val() != '' && $('textarea[name="formula"]').val() != '' ) {
+			insertFunctionToDb($('input[name="formula-name"]').val(), $('textarea[name="formula"]').val());
+			selectFromDb();
+			$('.done-functions').addClass('edit-functions').removeClass('done-functions');
+			$('.edit-functions').html('Edytuj');
+			$('#add-function').removeClass('ui-page-active');
+			$.mobile.changePage('#main', {transition: "slide"});
+		}
+		else {
+			$('#popupDialog').html(one_button.html());
+			//$('#popupDialog2').popup();
+			//$.mobile.changePage('#popupDialog2', 'pop', true, true);
+			return false;
+		}
+
+	});
+	
+	var opened = false;
+	
+	$(document).on('tap', '.check-formula', function(){
+		
+		//$('#popupDialog').html(two_buttons);
+		if(!opened){
+			one_button = $('#popupDialog').clone();
+			two_buttons = $('#popupDialog').clone();
+			one_button.find('.save-formula').remove();
+			opened = true;
+		}
+		
+		
+		$('#popupDialog').html(two_buttons.html());
+		
+		if(isFormulaCorrect($('textarea[name="formula"]').val())){
+			$('.formula-correct').text('Formuła jest poprawna');
+		}
+		else {
+			$('.formula-correct').text('Formuła jest niepoprawna');
+		}
 		
 	});
+	
+	//$('').onabort;
+	//
 	
 	$(document).on('tap', '.resolv-function', function(){
 		
 		
-		dropDb();
+		//dropDb();
 		//createDb();
 		//return false;
+		
 		
 	});
 	
 });
+
+function isDigit(c)
+{
+	return c >= '0' && c <= '9';
+}
+
+function isLetter(c)
+{
+	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
+
+function isFormulaCorrect(formula)
+{
+	var openingBrackets = 0;
+	var closingBrackets = 0;
+	var i;
+
+	for(i=0; i<formula.length; ++i)
+	{
+		while(formula[i] == ' ')
+			i++;
+
+		if(formula[i] == '#')
+		{
+			if(i+1 >= formula.length || !isLetter(formula[i+1]))
+			{
+				console.log("Error brak identyfikatora stalej!");
+				return false;
+			}
+
+			var j = i+1;
+			var constName = "";
+			while((j < formula.length && (isLetter(formula[j]) || isDigit(formula[j]))))
+				constName += formula[j++];
+			
+			//console.log(constants.constantValue('pi'));
+			if( !constants.constantExists(constName) ){
+				console.log("Error stala " + constName + " nie istnieje!");
+				return false;
+			}
+		}
+
+		if(formula[i] == '{')
+		{
+			openingBrackets++;
+			if(i+1 >= formula.length || formula[i+1] != '$')
+			{
+				console.log("Error brak znaku $ w argumencie!");
+				return false;
+			}
+		}
+		else if(formula[i] == '}')
+			closingBrackets++;
+	}
+
+	if(openingBrackets != closingBrackets)
+	{
+		console.log("Error bledna liczba nawiasow argumentow!");
+		return false;
+	}
+
+	console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
+
+	return true;
+}
+
+//Singleton constants
+var constants = new function(){
+	
+	//this.constants = new Array();
+	this.c = new Array();
+
+	this.constantExists = function(name)
+	{
+		if(this.c[name])
+			return true;
+		else
+			return false;
+	}
+
+	// constantExists should be called before to check 
+	// if a constant of given name is on the list
+	this.constantValue = function(name)
+	{
+		return this.c[name];
+	}
+
+	// Constant names can only be formed with letters and digits
+	this.c["pi"] = 3.14159265359;
+	this.c["three"] = 3.00;
+	this.c["luckynumber"] = 7;
+	this.c["p1"] = 1.1111111;
+	
+}

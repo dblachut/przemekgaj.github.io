@@ -68,11 +68,11 @@ function selectFromDb(){
 	          page.find('h1').html(name);
 	          //console.log(page.find('ul'));
 	          
-	          isFormulaCorrect(func);
+	          /*isFormulaCorrect(func);
 	          for(var i = 0; i<variables.length; i++){
 		          //page.find('.input-list').append('<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + variables[i] + '</a></li>');
 		          page.find('.input-list').append('<li><div class="ui-listview-label">'+ variables[i] +':</div><input type="text" name="'+ variables[i] +'" class="ui-input-listview" value=""/></li> ');
-	          }
+	          }*/
 	          
 	          //$('div[data-role="page"]').append(page);
 	          page.appendTo('body');

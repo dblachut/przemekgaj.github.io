@@ -66,6 +66,8 @@ function selectFromDb(){
 	          page.attr('id', 'f' + id);
 	          page.addClass('appended-functions');
 	          page.find('h1').html(name);
+	          //console.log(page.find('ul'));
+	          page.find('.input-list').append('<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + func + '</a></li>');
 	          
 	          //$('div[data-role="page"]').append(page);
 	          page.appendTo('body');

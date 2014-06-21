@@ -171,7 +171,7 @@ function selectFromDb(){
 	          var func = row.func;
 	          
 	          $('.functions-listview').append('<li><a href="#f' + id + '" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + name + '</a></li>');
-	          alert(i);
+	          alert('i = '+i);
 	          var page = $('#function-sketch').clone();
 	          page.attr('id', 'f' + id);
 	          page.addClass('appended-functions');

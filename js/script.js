@@ -195,7 +195,7 @@ function isLetter(c)
 {
 	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 }
-/*
+
 var variables;
 
 function isFormulaCorrect(formula)
@@ -266,7 +266,7 @@ function isFormulaCorrect(formula)
 	console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
 
 	return true;
-}*/
+}
 
 //Singleton constants
 var constants = new function(){

@@ -185,7 +185,7 @@ $(document).ready(function(){
 	});
 	
 });
-/*
+
 function isDigit(c)
 {
 	return c >= '0' && c <= '9';
@@ -266,7 +266,7 @@ function isFormulaCorrect(formula)
 	console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
 
 	return true;
-}*/
+}
 
 //Singleton constants
 var constants = new function(){

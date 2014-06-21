@@ -97,6 +97,7 @@ $(document).ready(function(){
 	//dropDb();
 	//createDb();
 	//selectFromDb();
+	alert('x');
 	
 	$(document).on('tap','.edit-functions',  function(){
 		var addFunction = $('.functions-listview').find('li:last').clone();

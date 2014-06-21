@@ -273,12 +273,12 @@ $(document).ready(function(){
 		
 		$('#popupDialog').html(two_buttons.html());
 		
-		/*if(isFormulaCorrect($('textarea[name="formula"]').val())){
+		if(isFormulaCorrect($('textarea[name="formula"]').val())){
 			$('.formula-correct').text('Formuła jest poprawna');
 		}
 		else {
 			$('.formula-correct').text('Formuła jest niepoprawna');
-		}*/
+		}
 		
 	});
 	

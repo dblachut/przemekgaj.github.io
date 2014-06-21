@@ -94,7 +94,7 @@ function selectFromDb(){
 
 $(document).ready(function(){
 
-	dropDb();
+	//dropDb();
 	createDb();
 	selectFromDb();
 	
@@ -162,12 +162,12 @@ $(document).ready(function(){
 		
 		$('#popupDialog').html(two_buttons.html());
 		
-		if(isFormulaCorrect($('textarea[name="formula"]').val())){
+		/*if(isFormulaCorrect($('textarea[name="formula"]').val())){
 			$('.formula-correct').text('Formuła jest poprawna');
 		}
 		else {
 			$('.formula-correct').text('Formuła jest niepoprawna');
-		}
+		}*/
 		
 	});
 	
@@ -185,7 +185,7 @@ $(document).ready(function(){
 	});
 	
 });
-
+/*
 function isDigit(c)
 {
 	return c >= '0' && c <= '9';
@@ -295,4 +295,4 @@ var constants = new function(){
 	this.c["luckynumber"] = 7;
 	this.c["p1"] = 1.1111111;
 	
-}
+}*/

@@ -95,8 +95,8 @@ function selectFromDb(){
 $(document).ready(function(){
 
 	//dropDb();
-	createDb();
-	selectFromDb();
+	//createDb();
+	//selectFromDb();
 	
 	$(document).on('tap','.edit-functions',  function(){
 		var addFunction = $('.functions-listview').find('li:last').clone();

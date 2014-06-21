@@ -161,6 +161,7 @@ function selectFromDb(){
 	    var sql = "SELECT * FROM functions";
 	    transaction.executeSql (sql, undefined, 
 	    function (transaction, result){
+	    	alert(result.rows.length+'');
 	      if (result.rows.length){
 	      	$('.functions-listview li').remove();
 	      	$('.appended-functions').remove();
@@ -197,7 +198,7 @@ function selectFromDb(){
 	      $('.functions-listview li:last').addClass('ui-last-child');
 	      
 	    }, function(){
-		    
+		    alert('cannot connect to db');
 	    });
 	});
 }

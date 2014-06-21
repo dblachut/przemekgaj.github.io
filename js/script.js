@@ -161,7 +161,7 @@ function selectFromDb(){
 	    var sql = "SELECT * FROM functions";
 	    transaction.executeSql (sql, undefined, 
 	    function (transaction, result){
-	    	alert(result.rows.length+'');
+	    	//alert(result.rows.length+'');
 	      if (result.rows.length){
 	      	$('.functions-listview li').remove();
 	      	$('.appended-functions').remove();
@@ -172,7 +172,7 @@ function selectFromDb(){
 	          var func = row.func;
 	          
 	          $('.functions-listview').append('<li><a href="#f' + id + '" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + name + '</a></li>');
-	          alert('i = '+i);
+	          //alert('i = '+i);
 	          var page = $('#function-sketch').clone();
 	          page.attr('id', 'f' + id);
 	          page.addClass('appended-functions');

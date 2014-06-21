@@ -266,7 +266,7 @@ function isFormulaCorrect(formula)
 	console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
 
 	return true;
-}
+}*/
 
 //Singleton constants
 var constants = new function(){
@@ -295,4 +295,4 @@ var constants = new function(){
 	this.c["luckynumber"] = 7;
 	this.c["p1"] = 1.1111111;
 	
-}*/
+}

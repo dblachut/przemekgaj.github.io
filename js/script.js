@@ -94,6 +94,7 @@ function selectFromDb(){
 
 $(document).ready(function(){
 
+	dropDb();
 	createDb();
 	selectFromDb();
 	

@@ -58,7 +58,6 @@ var variables;
 
 function isFormulaCorrect(formula)
 {
-	alert('start');
 	var openingBrackets = 0;
 	var closingBrackets = 0;
 	var i;
@@ -123,7 +122,6 @@ function isFormulaCorrect(formula)
 	}
 
 	console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
-	alert('end');
 	return true;
 }
 
@@ -173,7 +171,7 @@ function selectFromDb(){
 	          var func = row.func;
 	          
 	          $('.functions-listview').append('<li><a href="#f' + id + '" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + name + '</a></li>');
-	          
+	          alert(i);
 	          var page = $('#function-sketch').clone();
 	          page.attr('id', 'f' + id);
 	          page.addClass('appended-functions');

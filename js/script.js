@@ -17,7 +17,8 @@ $(document).ready(function(){
 		$('.functions-listview').append(addFunction);
 		
 		$('.functions-listview').find('a').each(function(){
-			$(this).removeClass('ui-icon-carat-r').addClass('ui-icon-minus');
+			if($(this).hasClass('ui-icon-carat-r'))
+				$(this).removeClass('ui-icon-carat-r').addClass('ui-icon-minus').addClass('remove-function');
 		});
 		
 		$(this).removeClass('edit-functions').addClass('done-functions');
@@ -28,13 +29,26 @@ $(document).ready(function(){
 	$(document).on('tap', '.done-functions', function(){
 		
 		$('.functions-listview').find('a').each(function(){
-			$(this).removeClass('ui-icon-minus').addClass('ui-icon-carat-r');
+			$(this).removeClass('ui-icon-minus').removeClass('remove-function').addClass('ui-icon-carat-r');
 		});
 		
 		$(this).removeClass('done-functions').addClass('edit-functions');
 		$(this).html('Edytuj');
 		
 		$('.functions-listview').find('li:last').remove();
+		
+	});
+	
+	$(document).on('tap', '.remove-function', function(){
+		
+		var id = $(this).attr('href').replace('#f', '');
+		
+		deleteFromDb(id);
+		$($(this).attr('href')).remove();
+		$(this).parent().remove();
+		
+		
+		return false;
 		
 	});
 	

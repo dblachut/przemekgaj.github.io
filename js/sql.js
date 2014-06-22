@@ -31,6 +31,18 @@ function dropDb(){
 	});
 }
 
+function deleteFromDb(id){
+	
+	db.transaction (function (transaction) {
+		var sql = "DELETE FROM functions WHERE id = " + id;
+		transaction.executeSql (sql, undefined, function (){ 
+			if(debug) console.log("Row deleted");
+		},function () { 
+			if(debug) console.log("Row not deleted");
+		});
+	});
+}
+
 function insertFunctionToDb(name, func){
 	
 	var ret = false;
@@ -81,7 +93,7 @@ function selectFromDb(){
 			        	 
 		         	}
 		         	else {
-			         	page.find('.input-list').append( '<li><div class="ui-listview-label">'+ variables[j] +
+			         	page.find('.input-list').append( '<li><div class="ui-listview-label">'+ variables[j].replace('$', '') +
 		         	 									 ':</div><input type="text" name="'+ variables[j] +
 		         	 									 '" class="ui-input-listview" value=""/></li> ');
 		         	}

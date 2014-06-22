@@ -1,0 +1,860 @@
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {
+	padding: 0;
+	margin: 0;
+	font-family: Tahoma;
+}
+.mask {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	background: #e7e7e7;
+	overflow: hidden
+}
+
+.m_left {
+	width: 10%;
+	background: #000;
+	height: 100vh;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0.6;
+}
+
+.m_right {
+	width: 10%;
+	background: #000;
+	height: 100vh;
+	position: absolute;
+	right: 0;
+	top: 0;
+	opacity: 0.6
+}
+
+.m_top {
+	width: 80%;
+	background: #000;
+	height: 5vh;
+	position: absolute;
+	left: 10%;
+	top: 0;
+	opacity: 0.6
+}
+
+.m_bottom {
+	width: 80%;
+	background: #000;
+	height: 5vh;
+	position: absolute;
+	left: 10%;
+	bottom: 0;
+	opacity: 0.6
+}
+
+.slides {
+	width: 20000px;
+	position: absolute;
+	left: 15%;
+	top: 10vh;
+	height: 80vh;
+}
+
+.slide {
+	float: left;
+	border: 1px #5c5c5c solid;
+	width: 70vw;
+	height: 80vh;
+	margin-right: 30px;
+	background: #2884d4;
+	text-align: center;
+}
+
+.slide_content {
+	width: 90%;
+	padding: 50px;
+	margin: 0 auto;
+	color: white;
+}
+
+.hint {
+	opacity: 0.7;
+	width: 200px;
+	height: 150px;
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	z-index: 1000;
+}
+.loading {
+	width: 100%;
+	height: 100vh;
+	background: #1b1b1b;
+	z-index: 99999;
+	position: absolute;
+	text-align: center;
+}
+.wait {
+	margin: 35vh 0;
+}
+
+.wait h1 {
+	color: #ff892a;
+	font-size: 20pt;
+}
+
+.left_arrow {
+	width: 30px;
+	height: 34px;
+	border: 1px #ff892a solid;
+	position: absolute;
+	left: 0;
+	top: 39px;
+	background: red;
+	opacity: 0.6;
+	display: none;
+}
+
+.right_arrow {
+	width: 30px;
+	height: 34px;
+	border: 1px #ff892a solid;
+	position: absolute;
+	left: 68px;
+	top: 39px;
+	background: red;
+	opacity: 0.6;
+	display: none;
+}
+
+.down_arrow {
+	width: 30px;
+	height: 34px;
+	border: 1px #ff892a solid;
+	position: absolute;
+	left: 34px;
+	top: 39px;
+	background: red;
+	opacity: 0.6;
+	display: none;
+}
+
+.up_arrow {
+	width: 30px;
+	height: 34px;
+	border: 1px #ff892a solid;
+	position: absolute;
+	left: 34px;
+	top: 0px;
+	background: red;
+	opacity: 0.6;
+	display: none;
+}
+
+/*slide_content*/
+
+.bordered_text {
+	padding: 40px;
+	border: 1px #fff solid;
+}
+
+.white {
+	color: #fff;
+}
+
+.title_page {
+	margin-top: 200px;
+}
+
+.slide_content h1 {
+	font-size: 28pt;
+}
+
+.slide_content h2 {
+	font-size: 24pt;
+}
+
+.slide_content p {
+	font-size: 18pt;
+}
+
+.m_50 {
+	margin-top: 50px;
+}
+
+.m_100 {
+	margin-top: 100px;
+}
+
+.m_200 {
+	margin-top: 200px;
+}
+
+table {
+	color: #fff;
+	margin: 0 auto;
+	font-size: 22pt;
+}
+
+table hr {
+	border: 1px #fff solid;
+	line-height: 1px;
+}
+
+.fract {
+	color: #fff;
+	float: left;
+	text-align: center;
+}
+
+ul {
+	font-size: 18pt;
+	text-align: left;
+}
+
+li {
+	margin: 40px auto;
+}
+
+.menu {
+	position: absolute;
+	width: 70px;
+	height: 70px;
+	left: 10px;
+	top: 10px;
+	z-index: 1999;
+}
+
+.menu_catch {
+	width: 220px;
+	height: 65px;
+	overflow: hidden;
+	left: 35px;
+	top: 3px;
+	position: absolute;
+	z-index: 1000;
+}
+
+.menu_label {
+	width: 220px;
+	height: 50px;
+	padding-top: 15px;
+	background: url(menu_label.png) no-repeat;
+	margin-left: -220px;
+	color: #fff;
+	text-align: center;
+	font-size: 18pt;
+}
+
+.menu img {
+	position: absolute;
+	z-index: 2000;
+}
+
+.plot {
+	width: 100%;
+}
+
+/*end_slide_content*/
+</style>
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+<script>
+var width = $(window).width();
+var height = $(window).height();
+var animating = false;
+var hint;
+var loading;
+var arrow_l;
+var arrow_r;
+var arrow_d;
+var arrow_u;
+
+function Resize(img)
+{
+  var scale = 0.7;
+
+  var minWidth = 5;
+  var minHeight = 5;
+	
+	if(img.width()*scale > minWidth && img.height()*scale > minHeight)
+	{
+	    img.width(img.width()*scale);
+	    img.height(img.height()*scale);
+	}
+}
+
+function init_vars(){
+	hint = $('.hint');
+	loading = $('.loading');
+	arrow_l = $('.left_arrow');
+	arrow_r = $('.right_arrow');
+	arrow_d = $('.down_arrow');
+	arrow_u = $('.up_arrow');
+}
+
+function init(){
+	
+	var hint_right = width / 2 - hint.width() / 2;
+	var hint_top = height / 2 - hint.height() / 2;
+	
+	hint.css('right', hint_right + 'px');
+	hint.css('top', hint_top + 'px');
+	
+	var i = 0;
+	var slideHeight = $('.slide:first').height() + 230;
+	
+	$('.slides').each(function(){
+		$(this).css('margin-top', (i * slideHeight) + 'px');
+		console.log((i * slideHeight));
+		i++;
+	});
+	
+	setTimeout(function(){
+		$('.loading').fadeOut();
+	}, 1500);
+}
+
+function hideHint(){
+	
+	hint.animate({
+		'right': '1.8%',
+		'top': '10px',
+		'width': hint.width() / 2 + 'px',
+		'height': hint.height() / 2 + 'px'
+	}, 500);
+	
+	hint.find('img').animate({
+		'width': hint.width() / 2 + 'px',
+		'height': hint.height() / 2 + 'px'
+	}, 500);
+	
+}
+
+$(document).ready(function(){
+	init_vars();
+	
+	$(window).load(function() {
+    	init();
+    });
+	
+	setTimeout(hideHint, 2000);
+
+	var slideWidth = $('.slide:first').width() + 30;
+	var slideHeight = $('.slide:first').height() + 230;
+	var activeSlides = 0;
+	
+	$('.slide img').each(function(){
+		Resize($(this));
+	});
+	
+	$(document).keydown(function(e){
+		
+		if(e.which == 39){
+			arrow_r.show();
+			if( -parseInt($('.slides:eq('+activeSlides+')').css('marginLeft')) < ($('.slides:eq('+activeSlides+')').find('.slide').length - 1) * slideWidth && !animating ){
+				animating = true;
+				$('.slides:eq('+activeSlides+')').animate({marginLeft: '-=' + slideWidth}, 500, function(){
+					animating = false;
+				});
+			}	
+		}
+		if(e.which == 37){
+			arrow_l.show();
+			if( parseInt($('.slides:eq('+activeSlides+')').css('marginLeft')) < 0 && !animating ){
+				animating = true;
+				$('.slides:eq('+activeSlides+')').animate({marginLeft: '+=' + slideWidth}, 500, function(){
+					animating = false;
+				});
+			}	
+		}
+		//up
+		if(e.which == 38){
+			arrow_u.show();
+			if( activeSlides > 0 ){
+				animating = true;
+				activeSlides--;
+				$('.slides').animate({marginTop: '+=' + slideHeight}, 500, function(){
+					animating = false;
+				});
+			}	
+		}
+		//down
+		if(e.which == 40){
+			arrow_d.show();
+			if( activeSlides < ($('.slides').length - 1) ){
+				animating = true;
+				activeSlides++;
+				$('.slides').animate({marginTop: '-=' + slideHeight}, 500, function(){
+					animating = false;
+				});
+			}	
+		}
+	}).keyup(function(e){
+		arrow_l.hide();
+		arrow_r.hide();
+		arrow_u.hide();
+		arrow_d.hide();
+	});
+	
+	$('.menu').hover(function(){
+		$('.menu_label').animate({marginLeft: '0px'}, 300);
+	}, function(){
+		$('.menu_label').animate({marginLeft: '-220px'}, 300);
+	});
+	
+});
+</script>
+</head>
+<body>
+	<div class="loading">
+		<div class="wait">
+			<h1>Loading...</h1>
+			<img src="loading.gif"/>
+		</div>
+	</div>
+	
+	<div class="menu">
+		<img src="menu.png"/>
+		<div class="menu_catch">
+			<div class="menu_label">
+				MENU
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class="hint">
+		<img src="arrow_keys.png"/>
+		<div class="left_arrow"></div>
+		<div class="right_arrow"></div>
+		<div class="down_arrow"></div>
+		<div class="up_arrow"></div>
+	</div>
+	<div class="mask">
+		<div class="slides">
+			<div class="slide">
+				<div class="slide_content">
+					<div class="bordered_text title_page"><h1>Biologically Inspired Artificial Intelligence</h1></div>
+					<p>
+						Repetitio (brevis): Twierdzenie o schematach
+					</p>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_100">Twierdzenie o schematach</h2>
+					<p class="m_100">
+						Twierdzenie o schematach mówi, że liczba N<sub>ξ</sub> (t+1) schematów ξ w pokoleniu t+1 dana jest zależnością:
+					</p>
+					<p class="m_100">
+						<table><tr><td>
+							E { N <sub>ξ</sub> ( t + 1 ) } ≥ N <sub>ξ</sub> ( t )
+						</td><td>
+						<table class="fract"><tr><td>f<sub>ξ</sub> (t)</td></tr><tr><td><hr/></td></tr><tr><td>f (t)</td></tr></table>
+						</td><td>
+							[1 − D<sub>c</sub> ( ξ ) ][1 − D<sub>m</sub> ( ξ )]
+						</td></tr></table>
+					</p>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_100">Twierdzenie o schematach</h2>
+					<ul class="m_100">
+						<li>
+							Rozważmy algorytm genetyczny z chromosomami zawierającymi n genów
+						</li>
+						<li>
+							W takim algorytmie przestrzeń reprezentacji I = {0,1}<sup>n</sup>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_100">Twierdzenie o schematach</h2>
+					<ul class="m_100">
+						<li>
+							Operatorem rekombinacji niech będzie krzyżowanie jednopunktowe
+						</li>
+						<li>
+							Prawdopodobieństwo krzyżowania oznaczmy przez p<sub>c</sub>
+						</li>
+						<li>
+							Wtedy:
+						</li>
+					</ul>
+					
+					<table>
+						<tr>
+							<td>
+								D<sub>c</sub> (ξ) = p<sub>c</sub>
+							</td>
+							<td>
+								<table class="fract"><tr><td>δ (ξ)</td></tr><tr><td><hr/></td></tr><tr><td>(n−1)</td></tr></table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_100">Twierdzenie o schematach</h2>
+					<ul class="m_100">
+						<li>
+							Niech będzie mutacja punktowa
+						</li>
+						<li>
+							Prawdopodobieństwo mutacji pojedynczego genu oznaczmy przez p<sub>m</sub>
+						</li>
+						<li>
+							Wtedy:
+						</li>
+					</ul>
+					
+					<table>
+						<tr>
+							<td>
+								D<sub>m</sub> (ξ) = 1 - (1 - p<sub>m</sub>)<sup>O(ξ)</sup>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_50">Twierdzenie o schematach</h2>
+					<ul class="m_50">
+						<li>
+							Dla małych wartości p<sub>m</sub>
+						</li>
+					</ul>
+					<table class="m_50">
+						<tr>
+							<td>
+								D<sub>m</sub> (ξ) = 1 - (1 - p<sub>m</sub>)<sup>O(ξ)</sup>
+							</td>
+						</tr>
+					</table>
+					<p class="m_100">
+					może być dobrze aproksymowane przez
+					</p>
+					<table class="m_100">
+						<tr>
+							<td>
+								D<sub>m</sub> (ξ) ≈ p<sub>m</sub>O(ξ)
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_100">Twierdzenie o schematach</h2>
+					<ul class="m_50">
+						<li>
+							Wówczas twierdzenie o schematach może być przedstawione jako
+						</li>
+					</ul>
+					<table class="m_50">
+						<tr>
+							<td>
+								E{N (t+1)} ≥ N (t)
+							</td>
+							<td>
+							<table class="fract"><tr><td>f<sub>ξ</sub> (t)</td></tr><tr><td><hr/></td></tr><tr><td>f (t)</td></tr></table>
+							</td>
+							<td>
+								[ 1 - p<sub>c</sub>
+							</td>
+							<td>
+							<table class="fract"><tr><td>δ (ξ)</td></tr><tr><td><hr/></td></tr><tr><td>(n−1)</td></tr></table>
+							</td>
+							<td>
+								][1 - p<sub>m</sub>O (ξ)]
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="slides">
+			<div class="slide">
+				<div class="slide_content">
+					<div class="bordered_text title_page"><h1>Biologically Inspired Artificial Intelligence</h1></div>
+					<p>
+						Repetitio (brevis): Twierdzenie o schematach
+					</p>
+				</div>
+			</div>
+			<div class="slide">
+				<div class="slide_content">
+					<h2>Oznaczenia</h2>
+					<p style="text-align: left;">
+						N - ilość wejść<br/>
+						M - ilość wyjść<br/>
+						R - ilość warstw<br/>
+						L - ilość wzorców uczących<br/>
+						N<sub>i</sub> - ilość neuronów warstwy i-tej (N<sub>R</sub> = M)<br/>
+						x<sup>(j)</sup> - j-ty wektor wejściowy<br/>
+						y<sup>(j)</sup> - j-ty wektor wyjściowy<br/>
+						d<sup>(j)</sup> - j-ty oczekiwany wektor wyjściowy<br/>
+						O<sub>j</sub><sup>(l)R</sup> - sygnał na wyjściu j-tego neuronu R-tej warstwy (R = 1..N<sub>R</sub>) po podaniu l -tego wzorca (l= 1..L) <br/>
+						E - całkowity błąd sieci po podaniu wszystkich wzorców uczących<br/>
+						E<sup>(l)</sup> - całkowity błąd sieci po podaniu l-tego wzorca uczącego<br/>
+						E<sub>m</sub><sup>(l)</sup> - błąd po podaniu l-tego wzorca uczącego dla m-tego wyjścia<br/>
+						η - współczynnik uczenia
+
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2>Algorytm propagacji wstecznej błędu</h2>
+					<p style="text-align: left;">
+						Dany jest ciąg uczący postaci:
+					</p>
+					<p>
+						<img src="slides/1-1.png"/>
+					</p>
+					<p style="text-align: left;">
+						Wówczas:
+					</p>
+					<p>
+						<img src="slides/1-2.png"/>
+					</p>
+					<p style="text-align: left;">
+						Gdzie:
+					</p>
+					<p>
+						<img src="slides/1-3.png"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_100">Algorytm propagacji wstecznej błędu (cd)</h2>
+					<p class="m_100" style="text-align: left;">
+						Uczenie sieci jest minimalizacją błędu E, w której zmiennymi niezależnymi są wagi w<sub>ij</sub>
+					</p>
+					<p class="m_100" style="text-align: left;">
+						Ponieważ nawet najprostsze sieci mają bardzo dużo wag jest to proces minimalizacji pola skalarnego nad przestrzenią wektorową o setkach (tysiącach) wymiarów.
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2>Algorytm propagacji wstecznej błędu (cd)</h2>
+					<p style="text-align: left;">
+						Do minimalizacji błędu E wykorzystujemy gradientową metodę największego spadku
+					</p>
+					<p style="text-align: left;">
+						Zgodnie z nią:
+					</p>
+					<p>
+						<img src="slides/1-4.png"/>
+					</p>
+					<p style="text-align: left;">
+						Z powyższego wzoru wynika, że zmiany wag dokonujemy po podaniu całego zestawu wzorców. Często jednak, dla uproszczenia algorytmu, rezygnujemy z tego warunku zmieniając wagi po podaniu każdego wzorca, odpowiednio zmniejszając η. Zatem:
+					</p>
+					<p>
+						<img src="slides/1-5.png"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_100">Algorytm propagacji wstecznej błędu (cd)</h2>
+					<p class="m_50" style="text-align: left;">
+						Ponieważ błąd generowany przez sieć nie zależy bezpośrednio od wag lecz od wyjść poszczególnych neuronów, te zaś dopiero zależą od wag, zatem:
+					</p>
+					<p class="m_50">
+						<img src="slides/1-6.png"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2>Algorytm propagacji wstecznej błędu (cd)</h2>
+					<p style="text-align: left;">
+						Ponieważ:
+					</p>
+					<p>
+						<img src="slides/1-7.png"/>
+					</p>
+					
+					<p style="text-align: left;">
+						Zatem:
+					</p>
+					<p>
+						<img src="slides/1-8.png"/>
+					</p>
+					
+					<p style="text-align: left;">
+						Oraz:
+					</p>
+					<p>
+						<img src="slides/1-9.png"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_50">Algorytm propagacji wstecznej błędu (cd)</h2>
+					<p class="m_100" style="text-align: left;">
+						Zdefiniujmy tzw. uogólnioną deltę jako:
+					</p>
+					<p>
+						<img src="slides/1-10.png"/>
+					</p>
+					<p class="m_100" style="text-align: left;">
+						Wówczas:
+					</p>
+					<p>
+						<img src="slides/1-11.png"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_50">Algorytm propagacji wstecznej błędu (cd)</h2>
+					<p class="" style="text-align: left;">
+						Znaczenie uogólnionej delty danego neuronu uzależnione jest od położenia rozważanego neuronu
+					</p>
+					<p class="" style="text-align: left;">
+						Dla warstwy wyjściowej:
+					</p>
+					<p>
+						<img src="slides/1-12.png"/>
+					</p>
+					<p class="m_100" style="text-align: left;">
+						Zatem:
+					</p>
+					<p>
+						<img src="slides/1-13.png"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2>Algorytm propagacji wstecznej błędu (cd)</h2>
+					<p class="m_50" style="text-align: left;">
+						Obliczamy uogólnione delty dla neuronów wyjściowych:
+					</p>
+					<p>
+						<img src="slides/1-14.png"/>
+					</p>
+					
+					<p class="m_50" style="text-align: left;">
+						Obliczamy uogólnione delty dla kolejnych (licząc od ostatniej do pierwszej) warstw ukrytych:
+					</p>
+					<p>
+						<img src="slides/1-15.png"/>
+					</p>
+					
+					<p class="m_50" style="text-align: left;">
+						Dokonujemy modyfikacji wag według:
+					</p>
+					<p>
+						<img src="slides/1-16.png"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2>Zalety algorytmu wstecznej propagacji:</h2>
+					<p class="m_50" style="text-align: left;">
+						<ul>
+							<li class="m_100">
+								metoda lokalna
+							</li>
+							<li class="m_100">
+								małe wymagania pamięciowe
+							</li>
+							<li class="m_100">
+								metoda uniwersalna
+							</li>
+						</ul>
+					</p>
+				</div>
+			</div>
+			
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_50">Wady algorytmu wstecznej propagacji:</h2>
+					<p class="m_50" style="text-align: left;">
+						<ul>
+							<li class="m_100">
+								Metoda wolnozbieżna (zwłaszcza przy płaskich funkcjach błędów – małe kroki, ale także przy zbyt stromych przy zbyt dużym współczynniku uczenia – oscylacje wokół minimum)
+							</li>
+							<li class="m_100">
+								Metoda znajduje minima lokalne funkcji błędu a nie globalne, których się poszukuje
+							</li>
+						</ul>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_50">Minima lokalne vs. minimum globalne (przypadek 1D):</h2>
+					<p class="m_50">
+						<img src="slides/1-17.png" class="plot"/>
+					</p>
+				</div>
+			</div>
+			
+			<div class="slide">
+				<div class="slide_content">
+					<h2 class="m_50">Eliminacja wady typu znajdowanie minimum lokalnego</h2>
+					<p class="m_50" style="text-align: left;">
+						<ul>
+							<li class="m_100">
+								Rozpoczynanie uczenia od wielu różnych warunków początkowych (multistart) – wada: brak dobrego kryterium ustalającego ilość prób
+							</li>
+							<li class="m_100">
+								Stosowanie algorytmów miękkiej selekcji (symulowane wyżarzanie, algorytmy ewolucyjne) - wada: algorytmy te są nieefektywne czasowo
+							</li>
+						</ul>
+					</p>
+				</div>
+			</div>
+			
+			
+		</div>
+		<div class="m_left"></div>
+		<div class="m_right"></div>
+		<div class="m_top"></div>
+		<div class="m_bottom"></div>
+	</div>
+</body>
+</html>
+<!--
+
+<div class="slide_content">
+					<h2 class="m_100">Twierdzenie o schematach</h2>
+					<ul class="m_100">
+						<li>
+							Twierdzenie o schematach wyraża fakt wykładniczego wzrostu w populacji pewnych schematów
+						</li>
+						<li>
+							Jakie warunki muszą spełniać schematy by ich liczebność w populacji zwiększała się wykładniczo?
+						</li>
+					</ul>
+				</div>
+				
+				-->

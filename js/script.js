@@ -7,6 +7,9 @@ $(document).ready(function(){
 	createDb();
 	selectFromDb();
 	
+	//console.log(opObject.getOperator('*'));
+	console.log(translateToONP('2/5+5*(2-4)='));
+	
 	$(document).on('tap','.edit-functions',  function(){
 		var addFunction = $('.functions-listview').find('li:last').clone();
 		addFunction.addClass('ui-first-child').removeClass('ui-invisible');

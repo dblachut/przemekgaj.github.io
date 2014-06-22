@@ -67,17 +67,27 @@ function selectFromDb(){
 	          page.attr('id', 'f' + id);
 	          page.addClass('appended-functions');
 	          page.find('h1').html(name);
-	          //console.log(page.find('ul'));
 	          
-	          if(isFormulaCorrect(func))
-	          for(var j = 0; j<variables.length; j++){
-		          //page.find('.input-list').append('<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + variables[i] + '</a></li>');
-		          page.find('.input-list').append('<li><div class="ui-listview-label">'+ variables[j] +':</div><input type="text" name="'+ variables[j] +'" class="ui-input-listview" value=""/></li> ');
+	          if(isFormulaCorrect(func)){
+	          	  for(var j = 0; j<variables.length; j++){
+	          	  	var explode = variables[j].split(':');
+	          	  	if(explode.length == 2){
+		         		page.find('.input-list').append( '<li><div class="ui-listview-label">'+ explode[1] +
+		         	 									 ':</div><input type="text" name="'+ variables[0] +
+		         	 									 '" class="ui-input-listview" value=""/></li> ');
+		         	}
+		         	else if(explode.length == 3){
+			        	 
+		         	}
+		         	else {
+			         	page.find('.input-list').append( '<li><div class="ui-listview-label">'+ variables[j] +
+		         	 									 ':</div><input type="text" name="'+ variables[j] +
+		         	 									 '" class="ui-input-listview" value=""/></li> ');
+		         	}
+		          }
 	          }
 	          
-	          //$('div[data-role="page"]').append(page);
 	          page.appendTo('body');
-	          //console.log(page);
 	        }
 	      }
 	      else {

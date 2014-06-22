@@ -12,9 +12,9 @@ function createDb(){
 		          "name VARCHAR(100) NOT NULL, " + 
 		          "func TEXT)";
 		transaction.executeSql (sql, undefined, function (){ 
-			console.log ("Table created");
+			if(debug) console.log("Table created");
 		},function () { 
-			console.log ("Table not created. Propably alredy exists.");
+			if(debug) console.log("Table not created. Propably alredy exists.");
 		});
 	});
 }
@@ -24,9 +24,9 @@ function dropDb(){
 	db.transaction (function (transaction) {
 		var sql = "DROP TABLE functions";
 		transaction.executeSql (sql, undefined, function (){ 
-			console.log ("Table deleted");
+			if(debug) console.log("Table deleted");
 		},function () { 
-			console.log ("Table not deleted");
+			if(debug) console.log("Table not deleted");
 		});
 	});
 }
@@ -67,13 +67,14 @@ function selectFromDb(){
 	          page.attr('id', 'f' + id);
 	          page.addClass('appended-functions');
 	          page.find('h1').html(name);
+	          page.find('.formula').html(func);
 	          
 	          if(isFormulaCorrect(func)){
 	          	  for(var j = 0; j<variables.length; j++){
 	          	  	var explode = variables[j].split(':');
 	          	  	if(explode.length == 2){
 		         		page.find('.input-list').append( '<li><div class="ui-listview-label">'+ explode[1] +
-		         	 									 ':</div><input type="text" name="'+ variables[0] +
+		         	 									 ':</div><input type="text" name="'+ variables[j] +
 		         	 									 '" class="ui-input-listview" value=""/></li> ');
 		         	}
 		         	else if(explode.length == 3){

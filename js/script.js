@@ -1,4 +1,4 @@
-
+var debug = true;
 
 $(document).ready(function(){
 
@@ -8,7 +8,7 @@ $(document).ready(function(){
 	selectFromDb();
 	
 	//console.log(opObject.getOperator('*'));
-	console.log(translateToONP('2/5+5*(2-4)='));
+	
 	
 	$(document).on('tap','.edit-functions',  function(){
 		var addFunction = $('.functions-listview').find('li:last').clone();
@@ -89,10 +89,18 @@ $(document).ready(function(){
 	$(document).on('tap', '.resolv-function', function(){
 		
 		
-		//dropDb();
-		//createDb();
-		//return false;
+		var inputs = $(this).parent().find('input');
+		var formula = $(this).parent().parent().find('.formula').text();
+		var results = $(this).parent().parent().parent().find('#fragment-2');
 		
+		
+		inputs.each(function(){
+		
+			formula = formula.replace('{'+$(this).attr('name')+'}', $(this).val());
+			
+		});
+		
+		results.html(calculateONP(translateToONP(formula + '=')));
 		
 	});
 	

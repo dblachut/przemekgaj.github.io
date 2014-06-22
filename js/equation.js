@@ -30,7 +30,7 @@ function getNumber(pattern, index)
 		number += pattern[index.i];
 		index.i++;
 		if(!isDigit(pattern[index.i]))
-			console.log("Brak liczby po separatorze dziesietnym!");
+			if(debug) console.log("Brak liczby po separatorze dziesietnym!");
 			
 		while(isDigit(pattern[index.i]) && index.i < pattern.length)
 		{
@@ -82,7 +82,7 @@ function translateToONP(equation)
 					}
 					output += equation[i];
 					if(i != equation.length-1)
-						console.log("Znak = nie na koncu równania");
+						if(debug) console.log("Znak = nie na koncu równania");
 					break;
 				case '(':
 					stack.push(equation[i]);
@@ -124,7 +124,7 @@ function translateToONP(equation)
 					{ // either a function or an error
 						if(!isLetter(equation[i])) // error
 						{
-							console.log("Error, nieznany znak: " + equation[i]);
+							if(debug) console.log("Error, nieznany znak: " + equation[i]);
 							return "";
 						}
 						// Get function name
@@ -136,7 +136,7 @@ function translateToONP(equation)
 						// recognize the function and put it where it belongs
 						if(!opObject.isOperator(fName))//Functions::inst.functionExists(fName))
 						{
-							console.log("Error, function " + fName + " does not exist\n");
+							if(debug) console.log("Error, function " + fName + " does not exist\n");
 							return "";
 						}
 	
@@ -147,14 +147,66 @@ function translateToONP(equation)
 	}
 	while( stack.length > 0 ){
 		appendOutput(stack[stack.length - 1]);
-		console.log(stack[stack.length - 1]);
+		if(debug) console.log(stack[stack.length - 1]);
 		stack.pop();
 	}
 
-	//console.log("Przed: " + equation);
-	//console.log("Po: " + output);
+	if(debug) console.log("Przed: " + equation);
+	if(debug) console.log("Po: " + output);
 	return output;
-}  
+}
+
+function calculateONP(line)
+{
+	var explode = line.split(' ');
+	if(debug) console.log(explode);
+	var stack = Array();
+	if(debug) console.log("Input\t\tOperation\t\tStack after");
+	var token;
+	var j = 0;
+	//return;
+	while (token = explode[j]) {
+		
+		if(debug) console.log(token + "\t\t");
+		
+		var tokenNum;
+		if (tokenNum = parseFloat(token)) 
+		{
+			
+			if(debug) console.log("Push\t\t\t");
+			
+			stack.push(tokenNum);
+		} 
+		else 
+		{
+			
+			if(debug) console.log("Operate\t\t\t");			
+			
+			if(opObject.isOperator(token))
+			{
+				var argc = opObject.getOperator(token).getArgc();
+				var tmp = Array();
+				for (var i = 0; i < argc; i++)
+				{
+					tmp.push(stack.pop());
+				}
+				tmp.reverse();
+				
+				stack.push(opObject.getOperator(token).getFunction()(tmp));
+			} // todo = in next line
+			else if (token == "=");
+			// do nothing
+			else { //just in case
+				//std::cerr << "Error" << std::endl;
+				//std::exit(1);
+				if(debug) console.log("Error");
+			}
+		}
+		//std::copy(stack.begin(), stack.end(), std::ostream_iterator<double>(std::cout, " "));
+		j++;
+	}
+	return stack.pop();
+}
 
 var variables;
 
@@ -169,14 +221,14 @@ function isFormulaCorrect(formula)
 
 	for(i=0; i<formula.length; ++i)
 	{
-		while(formula[i] == ' ')
-			i++;
+		//while(formula[i] == ' ')
+		//	i++;
 
 		if(formula[i] == '#')
 		{
 			if(i+1 >= formula.length || !isLetter(formula[i+1]))
 			{
-				console.log("Error brak identyfikatora stalej!");
+				if(debug) console.log("Error brak identyfikatora stalej!");
 				return false;
 			}
 
@@ -185,9 +237,9 @@ function isFormulaCorrect(formula)
 			while((j < formula.length && (isLetter(formula[j]) || isDigit(formula[j]))))
 				constName += formula[j++];
 			
-			//console.log(constants.constantValue('pi'));
+			//if(debug) console.log(constants.constantValue('pi'));
 			if( !constants.constantExists(constName) ){
-				console.log("Error stala " + constName + " nie istnieje!");
+				if(debug) console.log("Error stala " + constName + " nie istnieje!");
 				return false;
 			}
 		}
@@ -197,7 +249,7 @@ function isFormulaCorrect(formula)
 			openingBrackets++;
 			if(i+1 >= formula.length || formula[i+1] != '$')
 			{
-				console.log("Error brak znaku $ w argumencie!");
+				if(debug) console.log("Error brak znaku $ w argumencie!");
 				return false;
 			}
 			variable = true;
@@ -219,11 +271,11 @@ function isFormulaCorrect(formula)
 
 	if(openingBrackets != closingBrackets)
 	{
-		console.log("Error bledna liczba nawiasow argumentow!");
+		if(debug) console.log("Error bledna liczba nawiasow argumentow!");
 		return false;
 	}
 
-	console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
+	if(debug) console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
 	return true;
 }
 
@@ -320,7 +372,7 @@ var opObject = new function(){// IMPORTANT: function names are considered to be 
 	{
 		if(!this.isOperator(first) || !this.isOperator(second))
 		{
-			console.log(first + " lub " + second + " to nie operator!");
+			if(debug) console.log(first + " lub " + second + " to nie operator!");
 			return false;
 		}
 		var p1, p2;

@@ -1,7 +1,7 @@
 function calculateONP(line)
 {
 	var explode = line.split(' ');
-	if(debug) console.log(explode);
+	//if(debug) console.log(explode);
 	var stack = Array();
 	if(debug) console.log("Input\t\tOperation\t\tStack after");
 	var token;

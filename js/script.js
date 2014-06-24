@@ -168,13 +168,11 @@ $(document).ready(function(){
 		}
 		else if(parent.find('.appended-dynamic').length > 0)
 		{
+			var exp = formula.split(':');
+			var rplc = exp[1].split('}')[0];
+			var st = exp[0].split('{')[1];
 			parent.find('.appended-dynamic').each(function(){
-				
-				var exp = formula.split(':');
-				var rplc = exp[1].split('}')[0];
-				exp = $(this).find('input').attr('name').split('[')[0];
-				
-				formula = formula.replace('{$'+exp+':' + rplc + '}', '('+$(this).find('input').val()+')');
+				formula = formula.replace('{'+st+':' + rplc + '}', '('+$(this).find('input').val()+')');
 				formulas.push(formula);
 				values.push($(this).find('input').val());
 			});

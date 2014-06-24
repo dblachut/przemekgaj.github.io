@@ -6,11 +6,19 @@ $(document).ready(function(){
 	connectDb();
 	createDb();
 	selectFromDb();
-	var string = '{$i:Z}*{$}';
-	var f = new reference(string);
+	//var string = '{$i:Z[8]}*{$opor}/{$napiecie}*#pi';
+	var formula;
 	
-	console.log(isFormulaCorrect(f));
+	/*if(isFormulaCorrect(f)){
+		console.log('chuj');
+		console.log(parseFormula(f));
+		
+	}
+	var s = '2^3*4-9+4*(4-2)';
+	console.log(isEquationCorrect(s));
 	
+	console.log(calculateONP(translateToONP(s)));
+	*/
 	
 	$(document).on('tap','.edit-functions',  function(){
 		var addFunction = $('.functions-listview').find('li:last').clone();
@@ -61,7 +69,7 @@ $(document).ready(function(){
 	$(document).on('tap', '.save-formula', function(){
 		
 		if( $('input[name="formula-name"]').val() != '' && $('textarea[name="formula"]').val() != '' ) {
-			insertFunctionToDb($('input[name="formula-name"]').val(), $('textarea[name="formula"]').val());
+			insertFunctionToDb($('input[name="formula-name"]').val(), formula.ref);
 			selectFromDb();
 			$('.done-functions').addClass('edit-functions').removeClass('done-functions');
 			$('.edit-functions').html('Edytuj');
@@ -88,14 +96,39 @@ $(document).ready(function(){
 		}
 		
 		
-		$('#popupDialog').html(two_buttons.html());
+		//$('#popupDialog').html(two_buttons.html());
 		
-		if(isFormulaCorrect($('textarea[name="formula"]').val())){
+		formula = new reference($('textarea[name="formula"]').val());
+		
+		if(isFormulaCorrect(formula)){
+			$('#popupDialog').html(two_buttons.html());
 			$('.formula-correct').text('Formuła jest poprawna');
 		}
 		else {
+			$('#popupDialog').html(one_button.html());
 			$('.formula-correct').text('Formuła jest niepoprawna');
 		}
+		
+	});
+	
+	$(document).on('tap', '.add-value', function(){
+		
+		var name = $(this).parent().find('input[name="name"]').val();
+		var len = $(this).parent().parent().find('.appended-dynamic').length;
+		$(this).parent().removeClass('ui-last-child');
+		
+		if($(this).parent().parent().find('.appended-dynamic').length > 0){			 
+			$('<li class="appended-dynamic ui-li-static ui-body-inherit"><div class="ui-listview-label">'+ name + '[' + len +']' +
+		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="text" name="'+ name + '[' + len +']' +
+		         	 									 '" class="ui-input-listview" value=""/></li></div> ').insertAfter($(this).parent().parent().find('.appended-dynamic:last'));
+		}
+		else {
+			$('<li class="appended-dynamic ui-li-static ui-body-inherit"><div class="ui-listview-label">'+ name + '[' + len +']' +
+		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="text" name="'+ name + '[' + len +']' +
+		         	 									 '" class="ui-input-listview" value=""/></li></div> ').insertAfter($(this).parent());
+		}
+		
+		return false;
 		
 	});
 	
@@ -104,20 +137,61 @@ $(document).ready(function(){
 	
 	$(document).on('tap', '.resolv-function', function(){
 		
+		var formulas = Array();
+		var values = Array();
+		var parent = $(this).parent();
+		var formula = parent.find('.formula').html();
 		
-		var inputs = $(this).parent().find('input');
-		var formula = $(this).parent().parent().find('.formula').text();
-		var results = $(this).parent().parent().parent().find('#fragment-2');
-		
-		
-		inputs.each(function(){
-		
-			formula = formula.replace('{'+$(this).attr('name')+'}', $(this).val());
-			
+		parent.find('input[type!=hidden]').each(function(){
+			formula = formula.replace('{$'+$(this).attr('name')+'}', '('+$(this).val()+')');
 		});
 		
-		results.html(calculateONP(translateToONP(formula + '=')));
+		if(parent.find('input[name="step"]').length > 0)
+		{
+			var from = parseFloat(parent.find('input[name="from"]').val());
+			var to = parseFloat(parent.find('input[name="to"]').val());
+			var step = parseFloat(parent.find('input[name="step"]').val());
+			//console.log(from + ' ' +to + ' '+step);
+			var exp = formula.split(':');
+			//console.log(exp);
+			var rplc = exp[1].split('}')[0];
+			var st = exp[0].split('{')[1];
+			console.log(st+':' + rplc + '}');
+			for(;from < to; from+=step)
+			{
+				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+from+')'));
+				values.push(from);
+			}
+			formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
+			values.push(to);
+			console.log(formulas);
+		}
+		else if(parent.find('.appended-dynamic').length > 0)
+		{
+			parent.find('.appended-dynamic').each(function(){
+				
+				var exp = formula.split(':');
+				var rplc = exp[1].split('}')[0];
+				exp = $(this).find('input').attr('name').split('[')[0];
+				
+				formula = formula.replace('{$'+exp+':' + rplc + '}', '('+$(this).find('input').val()+')');
+				formulas.push(formula);
+				values.push($(this).find('input').val());
+			});
+		}
+		else
+		{
+			formulas.push(formula);
+			values.push('');
+		}
 		
+		for(var i=0; i<formulas.length; i++){
+			
+			parent.parent().find('#fragment-2').append('<tr><td>'+ values[i] +'</td><td>'+ calculateONP(translateToONP(formulas[i])) +'</td></tr>');
+			
+		}
+		
+		return false;
 	});
 	
 });

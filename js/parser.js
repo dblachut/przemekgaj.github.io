@@ -1,5 +1,6 @@
 var gAlternatingArgPosition = 0; // I don't think its the best way to do it
 var gAlternatingArgAmount = 0;
+var gAlternatingArgName = '';
 
 function isFormulaCorrect(formula)
 {
@@ -7,6 +8,7 @@ function isFormulaCorrect(formula)
 	var closingBrackets = 0;
 	gAlternatingArgAmount = 0;
 	gAlternatingArgPosition = 0;
+	gAlternatingArgName = '';
 
 	for(var i=0; i<formula.ref.length; ++i)
 	{
@@ -77,7 +79,7 @@ function checkConstantName(pattern, index)
 	}
 
 	var it = new reference(index.ref);
-	var constName = getName(pattern, index.ref);
+	var constName = getName(pattern, it);
 	index.ref = it.ref;
 
 	if( !Constants.constantExists(constName) )
@@ -336,4 +338,206 @@ function checkFunctionArgumentAmount(pattern, index, argumentNumber)
 		index.ref++;
 	}
 	return true;
+}
+
+function generateUserInputsForAlternatingArguments(formula, values, name)
+{
+	gAlternatingArgName = name;
+	console.log('Dynamiczny argument o nazwie: ' + name);
+	if(values.length == 0)
+	{
+		if(formula[gAlternatingArgPosition] == ')')		//:Z()
+		{
+			console.log('Skokowa: ' + from + ',' + to + ', ' + step);
+			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Od ('+ name +')'+
+			         	 									 ':</div><input type="text" name="from' +
+			         	 									 '" class="ui-input-listview" value=""/></li> ');
+			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Do ('+ name +')'+
+			         	 									 ':</div><input type="text" name="to' +
+			         	 									 '" class="ui-input-listview" value=""/></li> ');
+			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Skok ('+ name +')'+
+			         	 									 ':</div><input type="text" name="step' +
+			         	 									 '" class="ui-input-listview" value=""/></li> ');
+			
+		}
+		else											//:Z
+		{
+			var addFunction = $('.functions-listview').find('li:last').clone();
+			
+			addFunction.find('a').attr('data-transition', '').attr('href', '').removeClass('ui-icon-carat-r').addClass('ui-icon-plus').addClass('add-value').html('Dodaj wartość w ' + name);
+			addFunction.removeClass('ui-last-child').append('<input type="hidden" name="name" value="' + name + '"/>');
+			appendPage.find('ul').addClass('ui-alt-icon');
+			
+			appendPage.find('#fragment-1').addClass('ui-nosvg');
+			appendPage.find('.input-list').append(addFunction);
+		}
+	}
+	if(values.length == 1) //:Z[a]
+	{
+		var amount = parseFloat(values[0]);
+		
+		console.log('Formatka tablicowa o ilości: ' + amount);
+		var addFunction = $('.functions-listview').find('li:last').clone();
+		
+		addFunction.find('a').attr('data-transition', '').attr('href', '').removeClass('ui-icon-carat-r').addClass('ui-icon-plus').addClass('add-value').html('Dodaj wartość w ' + name);
+		addFunction.removeClass('ui-last-child').append('<input type="hidden" name="name" value="' + name + '"/>');
+		appendPage.find('ul').addClass('ui-alt-icon');
+		appendPage.find('#fragment-1').addClass('ui-nosvg');
+		appendPage.find('.input-list').append(addFunction);
+			
+		for(var i = 0; i<amount; i++){
+			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">'+ name + '[' + i +']' +
+		         	 									 ':</div><input type="text" name="'+ name + '[' + i +']' +
+		         	 									 '" class="ui-input-listview" value=""/></li> ');
+		         	 									 
+		}
+	}
+	if(values.length == 3)	//:Z(a,b,c)
+	{
+		var step = parseFloat(values[2]);
+		var to	= parseFloat(values[1]);
+		var from = parseFloat(values[0]);
+
+		console.log('Skokowa: ' + from + ',' + to + ', ' + step);
+		appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Od ('+ name +')'+
+		         	 									 ':</div><input type="text" value="' + from + '" name="from' +
+		         	 									 '" class="ui-input-listview" value=""/></li> ');
+		appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Do ('+ name +')'+
+		         	 									 ':</div><input type="text" value="' + to + '" name="to' +
+		         	 									 '" class="ui-input-listview" value=""/></li> ');
+		appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Skok ('+ name +')'+
+		         	 									 ':</div><input type="text" value="' + step + '" name="step' +
+		         	 									 '" class="ui-input-listview" value=""/></li> ');         	 						
+	}
+}
+
+function generateUserInputsForArguments(formula)
+{
+	var ret = Array();
+	var arguments = new Array();
+	for(var i = 0; i < formula.length; i++)
+	{
+		if(formula[i] == '{')
+		{
+			i += 2; // go to the first character of parameter name
+			var it = new reference(i);
+			var paramName = getName(formula, it);
+			i = it.ref;
+
+			if(gAlternatingArgName != paramName)
+				arguments.push(paramName);
+			
+			
+		}
+		
+	}
+	console.log('Funckcja ma argumenty: ');
+	arguments.forEach(function(entry){
+		appendPage.find('.input-list').append( '<li><div class="ui-listview-label">'+ entry +
+		         	 									 ':</div><input type="text" name="'+ entry +
+		         	 									 '" class="ui-input-listview" value=""/></li> ');        
+	});
+	
+	return ret;
+}
+
+function insertConstantValues(formula)
+{
+	var retval = '';
+	//console.log(formula);
+	for(var i = 0; i < formula.length;)
+	{
+		if(formula[i] == '#')
+		{
+			i++;
+			
+			var it = new reference(i);
+			console.log(formula + ' ' + i);
+			var constName = getName(formula, it);
+			i = it.ref;
+
+			retval += '(' + Constants.constantValue(constName) + ')'; // brackets in case the number is negative
+		}
+		else // not #
+		{ 
+			retval += formula[i++]; // incrementing i
+		}
+	}
+	return retval;
+}
+
+function parseFormula(formula)
+{
+	//var formulas = Array();
+	var values = Array();
+	var inputs = Array();
+	console.log(gAlternatingArgPosition);
+	if(gAlternatingArgPosition)
+	{
+		while(isLetter(formula.ref[gAlternatingArgPosition-1]) || isDigit(formula.ref[gAlternatingArgPosition-1]) || formula.ref[gAlternatingArgPosition-1] == ' ')
+			gAlternatingArgPosition--;
+	
+		var it = new reference(gAlternatingArgPosition);
+		var argName = getName(formula.ref, it);
+		
+		values = getAlternatingArgumentValues(formula.ref, it);
+		
+		gAlternatingArgPosition = it.ref;
+		
+		
+		
+		generateUserInputsForAlternatingArguments(formula.ref, values, argName);
+		
+		
+	}
+	
+	generateUserInputsForArguments(formula.ref);
+	
+
+	return insertConstantValues(formula.ref);
+
+	//return formulas;
+}
+
+function getAlternatingArgumentValues(pattern, index)
+{
+	var numbers = Array();
+
+	if(pattern[index.ref] == ':')
+	{
+		index.ref += 2;						//index.ref on sign after :Z
+		if(pattern[index.ref] != '}')		//checks if argument is alternating
+		{
+			if(pattern[index.ref] == '(')	//alernating with step
+			{
+				index.ref++;
+				if(pattern[index.ref] != ')')
+				{
+					var it = new reference(index.ref);
+					numbers.push(getNumberWithMinus(pattern, it));
+					index.ref = it.ref;
+
+					for(var j=0; j<2; j++)
+					{
+						while(pattern[index.ref] == ' ')
+							index.ref++;
+						index.ref++;		//skip separator sign
+						while(pattern[index.ref] == ' ')
+							index.ref++;
+						var it = new reference(index.ref);
+						numbers.push(getNumberWithMinus(pattern, it));
+						index.ref = it.ref;
+					}
+				}
+			}
+			else if (pattern[index.ref] == '[') //alternating with values from table
+			{
+				index.ref++;
+				var it = new reference(index.ref);
+				numbers.push(getNumber(pattern, it));
+				index.ref = it.ref;
+			}
+		}
+	}
+	return numbers;
 }

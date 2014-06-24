@@ -66,6 +66,14 @@ function getNumberWithMinus(pattern, index)
 	return number;
 }
 
+var output = "";
+
+function appendOutput(text)
+{
+	if(text.length)
+		output += text + ' ';
+}
+
 //Singleton constants
 var Constants = new function(){
 	
@@ -74,6 +82,7 @@ var Constants = new function(){
 
 	this.constantExists = function(name)
 	{
+		name = name.toUpperCase();
 		if(this.c[name])
 			return true;
 		else
@@ -84,6 +93,7 @@ var Constants = new function(){
 	// if a constant of given name is on the list
 	this.constantValue = function(name)
 	{
+		name = name.toUpperCase();
 		return this.c[name];
 	}
 
@@ -164,19 +174,9 @@ var Operators = new function(){// IMPORTANT: function names are considered to be
 		return false;
 	}
 
-	this.refsOperator = function(name)
+	this.isPrioritized = function(first, second)
 	{
-		for(var i = 0; i < this.o.length; i++)
-		{
-			if(this.o[i].getName() == name)
-				return true;
-		}
-		return false;
-	}
-
-	this.refsPrioritized = function(first, second)
-	{
-		if(!this.refsOperator(first) || !this.refsOperator(second))
+		if(!this.isOperator(first) || !this.isOperator(second))
 		{
 			if(debug) console.log(first + " lub " + second + " to nie operator!");
 			return false;
@@ -205,4 +205,6 @@ var Operators = new function(){// IMPORTANT: function names are considered to be
 	this.o.push(new Operator("sqrt", 4, 1, sqrtFunction));
 	this.o.push(new Operator("pow", 4, 2, powFunction));
 	this.o.push(new Operator("rand", 4, 0, randFunction));	
+	this.o.push(new Operator("fact", 4, 1, factorialFunction));
+	this.o.push(new Operator("avg", 4, -1, averageFunction));	
 };

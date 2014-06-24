@@ -75,12 +75,16 @@ function selectFromDb(){
 	          
 	          $('.functions-listview').append('<li><a href="#f' + id + '" data-transition="slide" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + name + '</a></li>');
 	          //alert('i = '+i);
-	          var page = $('#function-sketch').clone();
-	          page.attr('id', 'f' + id);
-	          page.addClass('appended-functions');
-	          page.find('h1').html(name);
-	          page.find('.formula').html(func);
+	          appendPage = $('#function-sketch').clone();
+	          appendPage.attr('id', 'f' + id);
+	          appendPage.addClass('appended-functions');
+	          appendPage.find('h1').html(name);
+	          appendPage.find('.formula').html(func);
 	          
+	          var formula = new reference(func);
+	          if(isFormulaCorrect(formula)){
+	          	parseFormula(formula);
+	          }
 	          /*if(isFormulaCorrect(func)){
 	          	  for(var j = 0; j<variables.length; j++){
 	          	  	var explode = variables[j].split(':');
@@ -100,7 +104,7 @@ function selectFromDb(){
 		          }
 	          }
 	          */
-	          page.appendTo('body');
+	          appendPage.appendTo('body');
 	        }
 	      }
 	      else {

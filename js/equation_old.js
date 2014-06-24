@@ -186,6 +186,10 @@ function calculateONP(line)
 			{
 				var argc = opObject.getOperator(token).getArgc();
 				var tmp = Array();
+				
+				if(argc == -1)	//dynamic amount of arguments
+					argc = parseInt(stack.pop());
+				
 				for (var i = 0; i < argc; i++)
 				{
 					tmp.push(stack.pop());
@@ -212,7 +216,7 @@ var variables;
 
 function isFormulaCorrect(formula)
 {
-	/*var openingBrackets = 0;
+	var openingBrackets = 0;
 	var closingBrackets = 0;
 	var i;
 	var variable = false;
@@ -276,7 +280,7 @@ function isFormulaCorrect(formula)
 	}
 
 	if(debug) console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
-	return true;*/
+	return true;
 	var openingBrackets = 0;
 	var closingBrackets = 0;
 	gAlternatingArgAmount = 0;

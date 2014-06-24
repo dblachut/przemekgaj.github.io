@@ -171,9 +171,9 @@ $(document).ready(function(){
 			var exp = formula.split(':');
 			var rplc = exp[1].split('}')[0];
 			var st = exp[0].split('{')[1];
+			
 			parent.find('.appended-dynamic').each(function(){
-				formula = formula.replace('{'+st+':' + rplc + '}', '('+$(this).find('input').val()+')');
-				formulas.push(formula);
+				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+$(this).find('input').val()+')'));
 				values.push($(this).find('input').val());
 			});
 		}

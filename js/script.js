@@ -6,8 +6,10 @@ $(document).ready(function(){
 	connectDb();
 	createDb();
 	selectFromDb();
+	var string = '{$i:Z}*{$}';
+	var f = new reference(string);
 	
-	//console.log(opObject.getOperator('*'));
+	console.log(isFormulaCorrect(f));
 	
 	
 	$(document).on('tap','.edit-functions',  function(){

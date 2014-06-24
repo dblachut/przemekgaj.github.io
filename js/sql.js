@@ -81,7 +81,7 @@ function selectFromDb(){
 	          page.find('h1').html(name);
 	          page.find('.formula').html(func);
 	          
-	          if(isFormulaCorrect(func)){
+	          /*if(isFormulaCorrect(func)){
 	          	  for(var j = 0; j<variables.length; j++){
 	          	  	var explode = variables[j].split(':');
 	          	  	if(explode.length == 2){
@@ -99,7 +99,7 @@ function selectFromDb(){
 		         	}
 		          }
 	          }
-	          
+	          */
 	          page.appendTo('body');
 	        }
 	      }

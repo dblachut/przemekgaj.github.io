@@ -212,7 +212,7 @@ var variables;
 
 function isFormulaCorrect(formula)
 {
-	var openingBrackets = 0;
+	/*var openingBrackets = 0;
 	var closingBrackets = 0;
 	var i;
 	var variable = false;
@@ -276,6 +276,51 @@ function isFormulaCorrect(formula)
 	}
 
 	if(debug) console.log( "Potrzebujemy: " + openingBrackets + " argumentow uzytkownika.");
+	return true;*/
+	var openingBrackets = 0;
+	var closingBrackets = 0;
+	gAlternatingArgAmount = 0;
+	gAlternatingArgPosition = 0;
+
+	for(var i=0; i<formula.length; ++i)
+	{
+		while(formula[i] == ' ')
+			i++;
+
+		if(formula[i] == '#')
+		{
+			i++;
+			if(!checkConstantName(formula, i))
+				return false;
+		}
+
+		if(formula[i] == '{')
+		{
+			openingBrackets++;
+			i++;
+			if(!checkArgument(formula, i, openingBrackets))
+				return false;
+		}
+		if(formula[i] == '}')
+			closingBrackets++;
+
+		if(isLetter(formula[i]))
+		{
+			var saved = openingBrackets;
+			if(!checkFunctionArgumentAmount(formula, i, openingBrackets))
+				return false;
+			// in function there can be user arguments, in that case openingBrackets will increment
+			// so we need to increment the closing brackets aswell
+			closingBrackets += openingBrackets - saved;
+		}
+	}
+
+	if(openingBrackets != closingBrackets)
+	{
+		console.log("Error wrong number of brackets in user arguments!");
+		return false;
+	}
+
 	return true;
 }
 

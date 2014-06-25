@@ -202,6 +202,7 @@ function checkAlternatingArgument(pattern, index)
 							return false;
 						}
 					}
+					index.ref++;
 				}
 			}
 			else if (pattern[index.ref] == '[')
@@ -222,6 +223,7 @@ function checkAlternatingArgument(pattern, index)
 					console.log("Error unknown sign " + pattern[index.ref] + " after [number in alternating argument!");
 					return false;
 				}
+				index.ref++;
 			}
 			else
 			{
@@ -308,7 +310,7 @@ function checkFunctionArgumentAmount(pattern, index, argumentNumber)
 					index.ref = it.ref;
 					pattern.ref = p.ref;
 					
-					++index.ref;
+					//++index.ref;
 					if(pattern.ref[index.ref] != '}')
 					{
 						console.log("Error, no closing bracket } in user argument in function arguments!");

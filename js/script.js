@@ -1,4 +1,5 @@
 var debug = true;
+var charts = [];
 
 $(document).ready(function(){
 
@@ -6,19 +7,8 @@ $(document).ready(function(){
 	connectDb();
 	createDb();
 	selectFromDb();
-	//var string = '{$i:Z[8]}*{$opor}/{$napiecie}*#pi';
+	
 	var formula;
-	
-	/*if(isFormulaCorrect(f)){
-		console.log('chuj');
-		console.log(parseFormula(f));
-		
-	}
-	var s = '2^3*4-9+4*(4-2)';
-	console.log(isEquationCorrect(s));
-	
-	console.log(calculateONP(translateToONP(s)));
-	*/
 	
 	$(document).on('tap','.edit-functions',  function(){
 		var addFunction = $('.functions-listview').find('li:last').clone();
@@ -183,11 +173,37 @@ $(document).ready(function(){
 			values.push('');
 		}
 		
+		var results = Array();
+		
 		for(var i=0; i<formulas.length; i++){
-			
-			parent.parent().find('#fragment-2').append('<tr><td>'+ values[i] +'</td><td>'+ calculateONP(translateToONP(formulas[i])) +'</td></tr>');
+			results.push(calculateONP(translateToONP(formulas[i].replace(',1', ',6'))));
+			parent.parent().find('#fragment-2').append('<tr><td>'+ values[i] +'</td><td>'+ results[results.length - 1] +'</td></tr>');
 			
 		}
+		
+		
+		//Get context with jQuery - using jQuery's .get() method.
+		
+		//This will get the first returned node in the jQuery collection.
+		
+		
+		var data = {
+			labels : values,
+			datasets : [
+				{
+					fillColor : "rgba(220,220,220,0.5)",
+					strokeColor : "rgba(220,220,220,1)",
+					pointColor : "rgba(220,220,220,1)",
+					pointStrokeColor : "#fff",
+					data : results
+				}
+			]
+		}
+		
+		var id = $(this).parent().parent().parent().parent().attr('id');
+		//console.log(charts[$(this).parent().parent()]);
+		charts[id].Line(data,chartOptions);
+		//new Chart(ctx).Line(data,chartOptions);
 		
 		return false;
 	});

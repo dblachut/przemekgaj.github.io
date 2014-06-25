@@ -77,6 +77,9 @@ function selectFromDb(){
 	          //alert('i = '+i);
 	          appendPage = $('#function-sketch').clone();
 	          appendPage.attr('id', 'f' + id);
+	          
+	          var ctx = appendPage.find('.chart').get(0).getContext("2d");
+	          charts['f' + id] = new Chart(ctx);
 	          appendPage.addClass('appended-functions');
 	          appendPage.find('h1').html(name);
 	          appendPage.find('.formula').html(func);
@@ -85,25 +88,7 @@ function selectFromDb(){
 	          if(isFormulaCorrect(formula)){
 	          	parseFormula(formula);
 	          }
-	          /*if(isFormulaCorrect(func)){
-	          	  for(var j = 0; j<variables.length; j++){
-	          	  	var explode = variables[j].split(':');
-	          	  	if(explode.length == 2){
-		         		page.find('.input-list').append( '<li><div class="ui-listview-label">'+ explode[1] +
-		         	 									 ':</div><input type="text" name="'+ variables[j] +
-		         	 									 '" class="ui-input-listview" value=""/></li> ');
-		         	}
-		         	else if(explode.length == 3){
-			        	 
-		         	}
-		         	else {
-			         	page.find('.input-list').append( '<li><div class="ui-listview-label">'+ variables[j].replace('$', '') +
-		         	 									 ':</div><input type="text" name="'+ variables[j] +
-		         	 									 '" class="ui-input-listview" value=""/></li> ');
-		         	}
-		          }
-	          }
-	          */
+	          
 	          appendPage.appendTo('body');
 	        }
 	      }

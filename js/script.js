@@ -21,7 +21,7 @@ function toggleFullScreen() {
 $(document).ready(function(){
 
 	toggleFullScreen();
-
+document.documentElement.requestFullscreen();
 	//dropDb();
 	connectDb();
 	createDb();

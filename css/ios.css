@@ -4818,3 +4818,8 @@ html .ui-popup .ui-field-contain > label + .ui-flipswitch {
 #fragment-2 td {
 	padding: 5px;
 }
+
+.chart {
+	margin: 0;
+	padding: 0;
+}

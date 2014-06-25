@@ -79,6 +79,8 @@ function selectFromDb(){
 	          appendPage.attr('id', 'f' + id);
 	          
 	          var ctx = appendPage.find('.chart').get(0).getContext("2d");
+	          ctx.canvas.width = chartWidth;
+			  ctx.canvas.height = chartHeight;
 	          charts['f' + id] = new Chart(ctx);
 	          appendPage.addClass('appended-functions');
 	          appendPage.find('h1').html(name);

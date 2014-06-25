@@ -1,5 +1,7 @@
 var debug = true;
 var charts = [];
+var chartWidth;
+var chartHeight;
 
 $(document).ready(function(){
 
@@ -7,9 +9,11 @@ $(document).ready(function(){
 	connectDb();
 	createDb();
 	selectFromDb();
+	chartWidth = $(window).width()*0.95;
+	chartHeight = $(window).height()*0.8;
 	
 	var formula;
-	
+
 	$(document).on('tap','.edit-functions',  function(){
 		var addFunction = $('.functions-listview').find('li:last').clone();
 		addFunction.addClass('ui-first-child').removeClass('ui-invisible');
@@ -129,6 +133,7 @@ $(document).ready(function(){
 		
 		var formulas = Array();
 		var values = Array();
+		var chartValues = Array();
 		var parent = $(this).parent();
 		var formula = parent.find('.formula').html();
 		
@@ -151,9 +156,11 @@ $(document).ready(function(){
 			{
 				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+from+')'));
 				values.push(from);
+				chartValues.push(from.toFixed(3));
 			}
 			formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
 			values.push(to);
+			chartValues.push(to.toFixed(3));
 			console.log(formulas);
 		}
 		else if(parent.find('.appended-dynamic').length > 0)
@@ -165,18 +172,23 @@ $(document).ready(function(){
 			parent.find('.appended-dynamic').each(function(){
 				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+$(this).find('input').val()+')'));
 				values.push($(this).find('input').val());
+				chartValues.push($(this).find('input').val());
 			});
 		}
 		else
 		{
 			formulas.push(formula);
 			values.push('');
+			chartValues.push('');
 		}
 		
+		var chartRes = Array();
 		var results = Array();
 		
 		for(var i=0; i<formulas.length; i++){
-			results.push(calculateONP(translateToONP(formulas[i].replace(',1', ',6'))));
+			var value = calculateONP(translateToONP(formulas[i].replace(',1', ',6')));
+			results.push(value);
+			chartRes.push(value.toFixed(3));
 			parent.parent().find('#fragment-2').append('<tr><td>'+ values[i] +'</td><td>'+ results[results.length - 1] +'</td></tr>');
 			
 		}
@@ -188,14 +200,14 @@ $(document).ready(function(){
 		
 		
 		var data = {
-			labels : values,
+			labels : chartValues,
 			datasets : [
 				{
-					fillColor : "rgba(220,220,220,0.5)",
-					strokeColor : "rgba(220,220,220,1)",
-					pointColor : "rgba(220,220,220,1)",
+					fillColor : "rgba(151,187,205,0.5)",
+					strokeColor : "rgba(151,187,205,1)",
+					pointColor : "rgba(151,187,205,1)",
 					pointStrokeColor : "#fff",
-					data : results
+					data : chartRes
 				}
 			]
 		}

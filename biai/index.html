@@ -69,7 +69,15 @@ body {
 	width: 70vw;
 	height: 80vh;
 	margin-right: 30px;
-	background: #2884d4;
+	background: #60a0d1; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #60a0d1 0%, #2884d4 98%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#60a0d1), color-stop(98%,#2884d4)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #60a0d1 0%,#2884d4 98%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #60a0d1 0%,#2884d4 98%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #60a0d1 0%,#2884d4 98%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #60a0d1 0%,#2884d4 98%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#60a0d1', endColorstr='#2884d4',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 	text-align: center;
 }
 
@@ -92,7 +100,15 @@ body {
 .loading {
 	width: 100%;
 	height: 100vh;
-	background: #1b1b1b;
+	background: #515151; /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  #515151 0%, #1b1b1b 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#515151), color-stop(100%,#1b1b1b)); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  #515151 0%,#1b1b1b 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  #515151 0%,#1b1b1b 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  #515151 0%,#1b1b1b 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  #515151 0%,#1b1b1b 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#515151', endColorstr='#1b1b1b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
 	z-index: 99999;
 	position: absolute;
 	text-align: center;
@@ -229,13 +245,13 @@ li {
 }
 
 .menu_catch {
-	width: 220px;
-	height: 65px;
-	overflow: hidden;
+	min-width: 220px;
+	min-height: 65px;
 	left: 35px;
 	top: 3px;
 	position: absolute;
 	z-index: 1000;
+	overflow: hidden;
 }
 
 .menu_label {
@@ -247,6 +263,39 @@ li {
 	color: #fff;
 	text-align: center;
 	font-size: 18pt;
+}
+
+.menu_list {
+	left: 34px;
+	top: 40px;
+	position: absolute;
+	z-index: 999;
+	display: block;
+	list-style: none;
+	min-width: 190px;
+	border-left: 1px #000 solid;
+	padding: 0;
+	border-right: 1px #000 solid;
+	display: none;
+}
+
+.menu_list li {
+	padding: 5px;
+	margin: 0;
+	font-size: 11pt;
+	display: block;
+	background: #323232;
+	border-bottom: 1px #000 solid;
+}
+
+.menu_list a {
+	text-decoration: none;
+	color: #fff;
+	width: 100%;
+}
+
+.menu_list li:hover {
+	background: #5e5e5e;
 }
 
 .menu img {
@@ -281,8 +330,10 @@ function Resize(img)
 	
 	if(img.width()*scale > minWidth && img.height()*scale > minHeight)
 	{
+		console.log(img.width() + ' -> ' + (img.width()*scale));
 	    img.width(img.width()*scale);
 	    img.height(img.height()*scale);
+	    
 	}
 }
 
@@ -308,8 +359,11 @@ function init(){
 	
 	$('.slides').each(function(){
 		$(this).css('margin-top', (i * slideHeight) + 'px');
-		console.log((i * slideHeight));
 		i++;
+	});
+	
+	$('.slide img').each(function(){
+		Resize($(this));
 	});
 	
 	setTimeout(function(){
@@ -333,6 +387,26 @@ function hideHint(){
 	
 }
 
+function slide(slides){
+	animating = true;
+	if(slides > activeSlides){
+		$('.slides').animate({marginTop: '-=' + (slideHeight * (slides - activeSlides))}, 500, function(){
+			animating = false;
+		});
+	}
+	else if(slides < activeSlides){
+		animating = true;
+		$('.slides').animate({marginTop: '+=' + (slideHeight * (activeSlides - slides))}, 500, function(){
+			animating = false;
+		});
+	}
+	activeSlides = slides;
+}
+
+var slideWidth;
+var slideHeight;
+var activeSlides 
+
 $(document).ready(function(){
 	init_vars();
 	
@@ -342,13 +416,9 @@ $(document).ready(function(){
 	
 	setTimeout(hideHint, 2000);
 
-	var slideWidth = $('.slide:first').width() + 30;
-	var slideHeight = $('.slide:first').height() + 230;
-	var activeSlides = 0;
-	
-	$('.slide img').each(function(){
-		Resize($(this));
-	});
+	slideWidth = $('.slide:first').width() + 30;
+	slideHeight = $('.slide:first').height() + 230;
+	activeSlides = 0;
 	
 	$(document).keydown(function(e){
 		
@@ -399,10 +469,19 @@ $(document).ready(function(){
 		arrow_d.hide();
 	});
 	
+	//var menu_opened = false;
 	$('.menu').hover(function(){
-		$('.menu_label').animate({marginLeft: '0px'}, 300);
+		$('.menu_label').stop().animate({marginLeft: '0px'}, 300, function(){
+			//menu_opened = true;
+			$('.menu_list').slideDown();
+		});
 	}, function(){
-		$('.menu_label').animate({marginLeft: '-220px'}, 300);
+		//menu_opened = false;
+		$('.menu_list').slideUp(200, function(){
+			$('.menu_label').stop().animate({marginLeft: '-220px'}, 300, function(){
+				
+			});
+		});
 	});
 	
 });
@@ -423,7 +502,10 @@ $(document).ready(function(){
 				MENU
 			</div>
 		</div>
-		
+		<ul class="menu_list">
+			<li><a href="javascript:slide(0);">Twierdzenie o schematach</a></li>
+			<li><a href="javascript:slide(1);">Backpropagation</a></li>
+		</ul>
 	</div>
 	
 	<div class="hint">

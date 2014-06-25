@@ -202,8 +202,8 @@ function checkAlternatingArgument(pattern, index)
 							return false;
 						}
 					}
-					index.ref++;
 				}
+				index.ref++;
 			}
 			else if (pattern[index.ref] == '[')
 			{
@@ -320,8 +320,13 @@ function checkFunctionArgumentAmount(pattern, index, argumentNumber)
 				}
 				else
 				{
-					console.log("Error, unknown sign " + pattern.ref[index.ref] + " in function arguments");
-					return false;
+					if(Operators.isOperator(pattern.ref[index.ref]))
+ 						argEntered--;
+					else
+					{
+						console.log("Error, unknown sign " + pattern.ref[index.ref] + " in function arguments");
+						return false;
+					}
 				}
 			}
 		}

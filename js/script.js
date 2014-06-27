@@ -225,6 +225,8 @@ $(document).ready(function(){
 		//console.log(charts[$(this).parent().parent()]);
 		charts[id].Line(data,chartOptions);
 		//new Chart(ctx).Line(data,chartOptions);
+		parent.parent().parent().parent().find('.tabs').tabs( 'option', 'active', 1 );
+		//console.log(parent.parent().parent().parent().find('.tabs'));
 		//parent.parent().find('#fragment-1').css('display', 'none').attr('aria-expanded', 'false').attr('aria-hidden', 'true');
 		//parent.parent().find('#fragment-2').css('display', 'block').attr('aria-expanded', 'true').attr('aria-hidden', 'false');
 		return false;

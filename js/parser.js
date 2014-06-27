@@ -357,13 +357,13 @@ function generateUserInputsForAlternatingArguments(formula, values, name)
 		{
 			console.log('Skokowa: ' + from + ',' + to + ', ' + step);
 			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Od ('+ name +')'+
-			         	 									 ':</div><input type="text" name="from' +
+			         	 									 ':</div><input type="number" name="from' +
 			         	 									 '" class="ui-input-listview" value=""/></li> ');
 			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Do ('+ name +')'+
-			         	 									 ':</div><input type="text" name="to' +
+			         	 									 ':</div><input type="number" name="to' +
 			         	 									 '" class="ui-input-listview" value=""/></li> ');
 			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Skok ('+ name +')'+
-			         	 									 ':</div><input type="text" name="step' +
+			         	 									 ':</div><input type="number" name="step' +
 			         	 									 '" class="ui-input-listview" value=""/></li> ');
 			
 		}
@@ -394,7 +394,7 @@ function generateUserInputsForAlternatingArguments(formula, values, name)
 			
 		for(var i = 0; i<amount; i++){
 			appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">'+ name + '[' + i +']' +
-		         	 									 ':</div><input type="text" name="'+ name + '[' + i +']' +
+		         	 									 ':</div><input type="number" name="'+ name + '[' + i +']' +
 		         	 									 '" class="ui-input-listview" value=""/></li> ');
 		         	 									 
 		}
@@ -407,13 +407,13 @@ function generateUserInputsForAlternatingArguments(formula, values, name)
 
 		console.log('Skokowa: ' + from + ',' + to + ', ' + step);
 		appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Od ('+ name +')'+
-		         	 									 ':</div><input type="text" value="' + from + '" name="from' +
+		         	 									 ':</div><input type="number" value="' + from + '" name="from' +
 		         	 									 '" class="ui-input-listview" value=""/></li> ');
 		appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Do ('+ name +')'+
-		         	 									 ':</div><input type="text" value="' + to + '" name="to' +
+		         	 									 ':</div><input type="number" value="' + to + '" name="to' +
 		         	 									 '" class="ui-input-listview" value=""/></li> ');
 		appendPage.find('.input-list').append( '<li class="appended-dynamic "><div class="ui-listview-label">Skok ('+ name +')'+
-		         	 									 ':</div><input type="text" value="' + step + '" name="step' +
+		         	 									 ':</div><input type="number" value="' + step + '" name="step' +
 		         	 									 '" class="ui-input-listview" value=""/></li> ');         	 						
 	}
 }
@@ -441,7 +441,7 @@ function generateUserInputsForArguments(formula)
 	console.log('Funckcja ma argumenty: ');
 	arguments.forEach(function(entry){
 		appendPage.find('.input-list').append( '<li><div class="ui-listview-label">'+ entry +
-		         	 									 ':</div><input type="text" name="'+ entry +
+		         	 									 ':</div><input type="number" name="'+ entry +
 		         	 									 '" class="ui-input-listview" value=""/></li> ');        
 	});
 	

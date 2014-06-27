@@ -178,6 +178,7 @@ function translateToONP(equation)
 							return "";
 						}
 						// Get function name
+						console.log(equation);
 						var fName = "";
 						while(equation[i] != '(')					
 							fName += equation[i++];

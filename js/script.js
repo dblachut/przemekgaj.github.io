@@ -156,7 +156,7 @@ $(document).ready(function(){
 			console.log(st+':' + rplc + '}');
 			for(;from < to; from+=step)
 			{
-				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+from+')'));
+				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+from.toFixed(16)+')'));
 				values.push(from);
 			}
 			formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
@@ -177,7 +177,6 @@ $(document).ready(function(){
 		else
 		{
 			formulas.push(formula);
-			values.push(0);
 		}
 		
 		var results = Array();
@@ -202,7 +201,7 @@ $(document).ready(function(){
 			chartRes.push(r);
 		});
 		
-		console.log(formulas);
+		//console.log(formulas);
 		//console.log(chartValues);
 		//console.log(chartRes);
 		

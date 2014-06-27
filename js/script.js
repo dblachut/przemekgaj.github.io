@@ -153,15 +153,17 @@ $(document).ready(function(){
 			//console.log(exp);
 			var rplc = exp[1].split('}')[0];
 			var st = exp[0].split('{')[1];
-			console.log(st+':' + rplc + '}');
+			//console.log(st+':' + rplc + '}');
 			for(;from < to; from+=step)
 			{
 				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+from.toFixed(16)+')'));
 				values.push(from);
 			}
-			formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
-			values.push(to);
-			console.log(formulas);
+			if((to - from) % step != 0)
+			{
+				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
+				values.push(to);
+			}
 		}
 		else if(parent.find('.appended-dynamic').length > 0)
 		{
@@ -184,7 +186,7 @@ $(document).ready(function(){
 		for(var i=0; i<formulas.length; i++){
 			var value = calculateONP(translateToONP(formulas[i]));
 			results.push(value);
-			parent.parent().find('#fragment-2').append('<tr><td>'+ values[i] +'</td><td>'+ value +'</td></tr>');
+			parent.parent().find('#fragment-2').append('<tr><td>'+ (values[i] === undefined ? '':values[i]) +'</td><td>'+ value +'</td></tr>');
 			
 		}
 		

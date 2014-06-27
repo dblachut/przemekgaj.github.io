@@ -1578,6 +1578,10 @@ div.ui-mobile-viewport {
 	margin-left: -1em;
 	margin-right: -1em;
 }
+#element-2 {
+	margin-left: -1em;
+	margin-right: -1em;
+}
 /* Corner styling for dialogs and popups */
 .ui-corner-all > .ui-header:first-child,
 .ui-corner-all > .ui-content:first-child,

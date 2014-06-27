@@ -112,12 +112,12 @@ $(document).ready(function(){
 		
 		if($(this).parent().parent().find('.appended-dynamic').length > 0){			 
 			$('<li class="appended-dynamic ui-li-static ui-body-inherit"><div class="ui-listview-label">'+ name + '[' + len +']' +
-		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" name="'+ name + '[' + len +']' +
+		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" pattern="[0-9.]*" step="0.01" name="'+ name + '[' + len +']' +
 		         	 									 '" class="ui-input-listview" value=""/></li></div> ').insertAfter($(this).parent().parent().find('.appended-dynamic:last'));
 		}
 		else {
 			$('<li class="appended-dynamic ui-li-static ui-body-inherit"><div class="ui-listview-label">'+ name + '[' + len +']' +
-		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" name="'+ name + '[' + len +']' +
+		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" pattern="[0-9.]*" step="0.01" name="'+ name + '[' + len +']' +
 		         	 									 '" class="ui-input-listview" value=""/></li></div> ').insertAfter($(this).parent());
 		}
 		
@@ -182,7 +182,7 @@ $(document).ready(function(){
 		}
 		
 		var results = Array();
-		
+		parent.parent().find('#fragment-2').text('');
 		for(var i=0; i<formulas.length; i++){
 			var value = calculateONP(translateToONP(formulas[i]));
 			results.push(value);
@@ -225,7 +225,8 @@ $(document).ready(function(){
 		//console.log(charts[$(this).parent().parent()]);
 		charts[id].Line(data,chartOptions);
 		//new Chart(ctx).Line(data,chartOptions);
-		
+		//parent.parent().find('#fragment-1').css('display', 'none').attr('aria-expanded', 'false').attr('aria-hidden', 'true');
+		//parent.parent().find('#fragment-2').css('display', 'block').attr('aria-expanded', 'true').attr('aria-hidden', 'false');
 		return false;
 	});
 	

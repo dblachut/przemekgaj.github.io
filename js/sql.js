@@ -85,7 +85,7 @@ function selectFromDb(){
 	          appendPage.addClass('appended-functions');
 	          appendPage.find('h1').html(name);
 	          appendPage.find('.formula').html(func);
-	          
+	          console.log(func + ' - formula z sql');
 	          var formula = new reference(func);
 	          if(isFormulaCorrect(formula)){
 	          	parseFormula(formula);

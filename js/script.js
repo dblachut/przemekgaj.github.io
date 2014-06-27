@@ -132,13 +132,16 @@ $(document).ready(function(){
 		
 		var formulas = Array();
 		var values = Array();
-		var chartValues = Array();
 		var parent = $(this).parent();
 		var formula = parent.find('.formula').html();
+		
+		formula = insertConstantValues(formula);
 		
 		parent.find('input[type!=hidden]').each(function(){
 			formula = formula.replace('{$'+$(this).attr('name')+'}', '('+$(this).val()+')');
 		});
+		
+		
 		
 		if(parent.find('input[name="step"]').length > 0)
 		{
@@ -155,11 +158,9 @@ $(document).ready(function(){
 			{
 				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+from+')'));
 				values.push(from);
-				chartValues.push(from.toFixed(3));
 			}
 			formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
 			values.push(to);
-			chartValues.push(to.toFixed(3));
 			console.log(formulas);
 		}
 		else if(parent.find('.appended-dynamic').length > 0)
@@ -171,32 +172,39 @@ $(document).ready(function(){
 			parent.find('.appended-dynamic').each(function(){
 				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+$(this).find('input').val()+')'));
 				values.push($(this).find('input').val());
-				chartValues.push($(this).find('input').val());
 			});
 		}
 		else
 		{
 			formulas.push(formula);
-			values.push('');
-			chartValues.push('');
+			values.push(0);
 		}
 		
-		var chartRes = Array();
 		var results = Array();
 		
 		for(var i=0; i<formulas.length; i++){
-			var value = calculateONP(translateToONP(formulas[i].replace(',1', ',6')));
+			var value = calculateONP(translateToONP(formulas[i]));
 			results.push(value);
-			chartRes.push(value.toFixed(3));
-			parent.parent().find('#fragment-2').append('<tr><td>'+ values[i] +'</td><td>'+ results[results.length - 1] +'</td></tr>');
+			parent.parent().find('#fragment-2').append('<tr><td>'+ values[i] +'</td><td>'+ value +'</td></tr>');
 			
 		}
 		
+		var chartRes = Array();
+		var chartValues = Array();
 		
-		//Get context with jQuery - using jQuery's .get() method.
 		
-		//This will get the first returned node in the jQuery collection.
 		
+		values.forEach(function(v){
+			chartValues.push(parseFloat(v).toFixed(2));
+		});
+		
+		results.forEach(function(r){
+			chartRes.push(r);
+		});
+		
+		console.log(formulas);
+		//console.log(chartValues);
+		//console.log(chartRes);
 		
 		var data = {
 			labels : chartValues,
@@ -205,13 +213,14 @@ $(document).ready(function(){
 					fillColor : "rgba(151,187,205,0.5)",
 					strokeColor : "rgba(151,187,205,1)",
 					pointColor : "rgba(151,187,205,1)",
-					pointStrokeColor : "#fff",
+					pointStrokeColor : "rgba(151,187,205,1)",
 					data : chartRes
 				}
 			]
 		}
 		
 		var id = $(this).parent().parent().parent().parent().attr('id');
+		console.log(id);
 		//console.log(charts[$(this).parent().parent()]);
 		charts[id].Line(data,chartOptions);
 		//new Chart(ctx).Line(data,chartOptions);

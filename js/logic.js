@@ -98,7 +98,7 @@ var Constants = new function(){
 	}
 
 	// Constant names can only be formed with letters and digits
-	this.c["PI"] = 3.14159265359;
+	this.c["PI"] = 3.1415;
 	this.c["THREE"] = 3.00;
 	this.c["LUCKYNUMBER"] = 7;
 	this.c["P1"] = 1.1111111;

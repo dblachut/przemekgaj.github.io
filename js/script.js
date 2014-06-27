@@ -112,12 +112,12 @@ $(document).ready(function(){
 		
 		if($(this).parent().parent().find('.appended-dynamic').length > 0){			 
 			$('<li class="appended-dynamic ui-li-static ui-body-inherit"><div class="ui-listview-label">'+ name + '[' + len +']' +
-		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" pattern="[0-9.]*" step="any" name="'+ name + '[' + len +']' +
+		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="text" pattern="\d+" name="'+ name + '[' + len +']' +
 		         	 									 '" class="ui-input-listview" value=""/></li></div> ').insertAfter($(this).parent().parent().find('.appended-dynamic:last'));
 		}
 		else {
 			$('<li class="appended-dynamic ui-li-static ui-body-inherit"><div class="ui-listview-label">'+ name + '[' + len +']' +
-		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" pattern="[0-9.]*" step="any" name="'+ name + '[' + len +']' +
+		         	 									 ':</div><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="text" pattern="\d+" name="'+ name + '[' + len +']' +
 		         	 									 '" class="ui-input-listview" value=""/></li></div> ').insertAfter($(this).parent());
 		}
 		
@@ -159,11 +159,8 @@ $(document).ready(function(){
 				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+from.toFixed(16)+')'));
 				values.push(from);
 			}
-			if((to - from) % step != 0)
-			{
-				formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
-				values.push(to);
-			}
+			formulas.push(formula.replace('{'+st+':' + rplc + '}', '('+to+')'));
+			values.push(to);
 		}
 		else if(parent.find('.appended-dynamic').length > 0)
 		{

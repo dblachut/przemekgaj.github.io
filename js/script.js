@@ -1,5 +1,10 @@
+var debug = true;
+
 $(document).ready(function(){
 	
-	alert('x');
+	if(debug) console.log('Starting...');
+	
+	
+	
 	
 });

@@ -3,18 +3,98 @@ body {
 	padding: 0;
 	font-family: Tahoma;
 	font-size: 10pt;
+	text-align: center;
 }
 
 .main {
 	width: 100%;
 	height: 100vh;
-	background: #e2e2e2; /* Old browsers */
-	background: -moz-linear-gradient(top,  #e2e2e2 0%, #c1c1c1 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e2e2e2), color-stop(100%,#c1c1c1)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  #e2e2e2 0%,#c1c1c1 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  #e2e2e2 0%,#c1c1c1 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  #e2e2e2 0%,#c1c1c1 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  #e2e2e2 0%,#c1c1c1 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#c1c1c1',GradientType=0 ); /* IE6-9 */
+	background: #3d3d3d;
+}
 
+.content {
+	
+}
+
+.login_header {
+	width: 400px;
+	height: 70px;
+	position: absolute;
+	top: 10%;
+    left: 50%;
+    margin: -35px 0 0 -200px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+}
+
+.login_header h1 {
+	font-weight: lighter;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 5px;
+	font-size: 28pt;
+}
+
+.login_header p {
+	font-weight: lighter;
+	margin: 0;
+	padding: 0 0 0 10px;
+	letter-spacing: 14px;
+	font-size: 11pt;
+}
+
+.login_box {
+	width: 450px;
+	background: #cbcbcb;
+	border: 1px #000 solid;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position: absolute;
+	top: 40%;
+    left: 50%;
+    margin: -175px 0 0 -250px;
+    -webkit-box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.55);
+	-moz-box-shadow:    3px 3px 10px 0px rgba(0, 0, 0, 0.55);
+	box-shadow:         3px 3px 10px 0px rgba(0, 0, 0, 0.55);
+	padding: 25px;
+}
+
+input[name="nickname"] {
+	width: 420px;
+	margin: 20px auto 0 auto;
+	border: 1px #ccc solid;
+	padding: 5px 15px;
+	font-size: 14pt;
+	font-weight: lighter;
+	background: #ddd;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+select[name="server"] {
+   	width: 450px;
+   	margin: 20px auto 0 auto;
+   	height: 34px;
+   	padding: 5px 15px;
+   	overflow: hidden;
+   	background: url(arrow.png) no-repeat right #ddd;
+   	border: 1px #ccc solid;
+   	-webkit-border-radius: 5px;
+   	-moz-border-radius: 5px;
+   	border-radius: 5px;
+}
+
+input[name="signin"] {
+	width: 150px;
+	border: 1px #ccc solid;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background: #3d3d3d;
+	margin: 20px auto 0 auto;
+	padding: 5px 15px;
+	font-size: 14pt;
+	color: #fff;
 }

@@ -2,13 +2,31 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>LiveChat Challenge</title>
+<meta charset="UTF-8">
 <link type="text/css" rel="stylesheet" href="css/style.css"/>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 </head>
 <div class="main">
 	<div class="content">
-	
+		<div class="alert">
+			<div class="alert_box">
+			</div>
+		</div>	
+		<div class="login_header">
+			<h1>LiveChat</h1>
+			<p>Challenge</p>
+		</div>
+		<div class="login_box">
+			<form action="" method="post" class="signin">
+				<select name="server">
+					<option value="http://gratest.nstrefa.pl/livechat/livechat.php">Główny serwer</option>
+					<option value="http://gratest.nstrefa.pl/livechat/livechat.php">Rezerowy serwer</option>
+				</select>
+				<input type="text" name="nickname" value="Nickname..."/>
+				<input type="submit" value="Zaloguj" name="signin"/>
+			</form>
+		</div>
 	</div>
 </div>
 </body>

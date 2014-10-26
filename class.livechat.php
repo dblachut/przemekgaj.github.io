@@ -148,7 +148,7 @@ class Livechat {
 		$contacts = explode("\n", $_contacts);
 		
 		foreach($contacts as $contact)
-			if($contact = $nickname)
+			if($contact == $nickname)
 				return true;
 		
 		return false;

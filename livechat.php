@@ -9,11 +9,12 @@ if(isset($_POST['todo']))
 switch($_POST['todo']){
 	case 'save':
 		if($_POST['new_u'] == 1){
-			if($chat->isUserAdded($_POST['login']))
+			if(!$chat->isUserAdded($_POST['login']))
 				$chat->appendToFile($chat->getSessionDir().$_SESSION['nickname'].'-contacts', $_POST['login']);
 		}
 		else {
-			$chat->editLine($_SESSION['nickname'].'-contacts', $_POST['edited'], $_POST['login']);
+			if(!$chat->isUserAdded($_POST['login']))
+				$chat->editLine($_SESSION['nickname'].'-contacts', $_POST['edited'], $_POST['login']);
 		}
 		break;
 	case 'save-status':

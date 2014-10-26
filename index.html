@@ -10,20 +10,53 @@
 <div class="main">
 	<div class="content">
 		<div class="alert">
-			<div class="alert_box">
-			</div>
+		</div>
+		<div class="popup">
 		</div>	
+		<div class="alert_box">
+			<p class="message"></p>
+			<div class="button alert_ok">OK</div>
+		</div>
+		<div class="popup_box">
+			<p class="message"></p>
+			<div class="button popup_ok">OK</div>
+		</div>
+		<div class="chat_box">
+			<div class="close_chat"></div>
+			<div class="loading"></div>
+			<div class="chat">
+				<div class="chat_tab" id="public"></div>
+				<div class="chat_tabs">
+					<ul>
+						<li class="li_active"><a class="public" href="javascript:showTab('public');">Publiczny</a></li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="chat_contacts">
+				<div class="button change_status">Zmień status</div>
+				<div class="button add_contact">Dodaj kontakt</div>
+				<ul class="contact_list">
+				
+				</ul>
+			</div>
+			<div class="chat_messages">
+				<input type="text" name="message" value=""/>
+				<input type="submit" name="send" value="Wyślij" class="button"/>
+			</div>
+		</div>
 		<div class="login_header">
 			<h1>LiveChat</h1>
 			<p>Challenge</p>
 		</div>
-		<div class="login_box">
+		<div class="user_box">
 			<form action="" method="post" class="signin">
 				<select name="server">
 					<option value="http://gratest.nstrefa.pl/livechat/livechat.php">Główny serwer</option>
 					<option value="http://gratest.nstrefa.pl/livechat/livechat.php">Rezerowy serwer</option>
 				</select>
-				<input type="text" name="nickname" value="Nickname..."/>
+				<input type="text" name="nickname" value="Nickname..." autocomplete="off"/>
+				<input type="text" name="email" value="E-mail..." autocomplete="off"/>
 				<input type="submit" value="Zaloguj" name="signin"/>
 			</form>
 		</div>
